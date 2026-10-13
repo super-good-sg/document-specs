@@ -25,7 +25,8 @@ Applies to every Super Good repo (`document-specs`, `frontend-web`, `backend`). 
 |---|---|---|
 | Commit message format | `commit-msg` hook (husky and commitlint) | The commit, on your machine |
 | PR title format | CI check `PR title` | Merging, once it is a required check on `main` |
-| Branch name | Convention and the PR checklist | Nothing |
+| Branch name | PR checklist item | Nothing |
+| Merge style (no squash) | Convention. Disable squash and rebase merging in the repo settings to enforce it | Nothing until the setting is changed |
 
 The hook is skipped by `git commit --no-verify` and does not exist until `npm install` has run in the clone or worktree, so the PR title check is the backstop. Run `npm ci` after creating a worktree.
 
@@ -39,6 +40,7 @@ Set in Linear (Settings, Integrations, GitHub), not in code:
 
 | PR event | Linear status |
 |---|---|
-| Draft PR opened | In Progress |
-| PR opened or review requested | In Review |
-| PR merged | Done |
+| PR ready for review | In Review (verified) |
+| PR merged | Done (set in Linear, not yet verified) |
+
+The draft-PR rule is not verified: set In Progress by hand when you start.

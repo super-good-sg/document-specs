@@ -16,7 +16,7 @@ Details owned by later tickets: CLAUDE.md files (SIE-84), Linear/GitHub conventi
 |---|---|---|
 | 1. Pick | Sieu | Choose a Linear issue (Backlog to Todo). Check its "Depends on" tickets are done. |
 | 2. Brief | Sieu or agent | Make sure the issue has a task brief (template below). Missing links or acceptance criteria: fix the issue first. |
-| 3. Worktree | Sieu | Create a worktree and branch with the sieujs Warp tab config (`repo_alias`). Branch name is `type/SIE-xxx/short-summary` (for example `docs/SIE-85/linear-github-conventions`, see [CONVENTIONS.md](CONVENTIONS.md)). Linear moves the issue to In Progress when the first PR is opened as a draft. |
+| 3. Worktree | Sieu | Create a worktree and branch with the sieujs Warp tab config (`repo_alias`). Branch name is `type/SIE-xxx/short-summary` (for example `docs/SIE-85/linear-github-conventions`, see [CONVENTIONS.md](CONVENTIONS.md)). Move the issue to In Progress when you start. |
 | 4. Read | Agent | The repo `CLAUDE.md`, the linked doc section or contract, relevant ADRs, then the pattern index (see Patterns). |
 | 5. Build | Agent | Implement only what the brief asks. Tests alongside. Run build, test and lint. |
 | 6. Stop and ask | Agent | Whenever a stop rule below applies. |
@@ -103,7 +103,7 @@ Specs first, then code. Scope of this ticket is only this flow; broader guard ra
 | Done | Merged |
 | Canceled | Decided against |
 
-Linear moves status from PR events (SIE-85): draft PR opened → In Progress, PR opened or review requested → In Review, PR merged → Done. Todo is still set by hand when the brief is ready.
+Linear moves status from PR events (SIE-85): PR ready for review → In Review (verified), PR merged → Done (set in Linear, not yet verified). Todo and In Progress are set by hand.
 
 ## Working as one developer
 - One active milestone and at most two tickets in progress.
