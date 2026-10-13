@@ -20,7 +20,7 @@ Docs repo and source of truth: specs (Spec Kit), ADRs, the order schema and Open
 Specs, ADRs and contracts (OpenAPI, order schema) all live in [document-specs](https://github.com/super-good-sg/document-specs). See the [standard](https://github.com/super-good-sg/document-specs/blob/main/docs/claude-md-standard.md#where-things-live-all-in-document-specs) for paths.
 
 ## Conventions
-- Branch name is the Linear `gitBranchName`. One ticket, one branch, one PR. Never merge your own PR.
+- Branch `type/SIE-xxx/short-summary`, commits and PR title `type(SIE-xxx): message` (see [CONVENTIONS.md](https://github.com/super-good-sg/document-specs/blob/main/docs/CONVENTIONS.md)). One ticket, one branch, one PR. Never merge your own PR.
 - Reuse approved patterns; stop and ask before adding a new library or convention.
 - No secrets in code or commits.
 - New or changed behavior starts as a spec here, merged by PR before dependent code.
