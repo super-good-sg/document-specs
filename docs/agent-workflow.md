@@ -5,7 +5,7 @@ Lives in the `document-specs` repo (the docs repo), at `docs/agent-workflow.md`.
 Details owned by later tickets: CLAUDE.md files (SIE-84), Linear/GitHub conventions (SIE-85), permissions and hooks (SIE-86), PR review gate (SIE-87), patterns (SIE-88), weekly code/spec sync (SIE-93).
 
 ## Principles
-1. **The docs repo is the source of truth.** Business doc, ADRs, the canonical order schema and the OpenAPI contracts live there. Agents read them before coding.
+1. **The docs repo is the source of truth.** Business doc, ADRs, the canonical order schema and the OpenAPI contracts live there. Agents read them before coding. **Linear is the source of truth for work**: tickets, briefs, dependencies and status.
 2. **One ticket, one worktree, one branch, one PR.**
 3. **Contracts change first.** A change to the OpenAPI spec or order schema is a PR to the docs repo, merged before any code that depends on it.
 4. **Reuse approved patterns; ask before inventing.**
