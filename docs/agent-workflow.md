@@ -16,13 +16,13 @@ Details owned by later tickets: CLAUDE.md files (SIE-84), Linear/GitHub conventi
 |---|---|---|
 | 1. Pick | Sieu | Choose a Linear issue (Backlog to Todo). Check its "Depends on" tickets are done. |
 | 2. Brief | Sieu or agent | Make sure the issue has a task brief (template below). Missing links or acceptance criteria: fix the issue first. |
-| 3. Worktree | Sieu | Create a worktree and branch with the sieujs Warp tab config (`repo_alias`). Branch name is the Linear `gitBranchName` (for example `nvsieu2703/sie-83-08-agent-workflow-spec`). Issue moves to In Progress. |
+| 3. Worktree | Sieu | Create a worktree and branch with the sieujs Warp tab config (`repo_alias`). Branch name is `type/SIE-xxx/short-summary` (for example `docs/SIE-85/linear-github-conventions`, see [CONVENTIONS.md](CONVENTIONS.md)). Move the issue to In Progress when you start. |
 | 4. Read | Agent | The repo `CLAUDE.md`, the linked doc section or contract, relevant ADRs, then the pattern index (see Patterns). |
 | 5. Build | Agent | Implement only what the brief asks. Tests alongside. Run build, test and lint. |
 | 6. Stop and ask | Agent | Whenever a stop rule below applies. |
 | 7. PR | Agent | Push the branch, open a PR that links the Linear issue and the contract or doc section, and fills the PR checklist. |
 | 8. Review | CI + reviewer | CI passes, then a review pass checks the diff against the brief and contract (SIE-87). |
-| 9. Merge | Sieu | Squash merge. Issue moves to Done. Remove the worktree (`sieujs-cleanup`). |
+| 9. Merge | Sieu | Merge with the merge button (a merge commit, no squash). Linear moves the issue to Done. Remove the worktree (`sieujs-cleanup`). |
 
 ## Task brief template (Linear issue description)
 ```
@@ -103,7 +103,7 @@ Specs first, then code. Scope of this ticket is only this flow; broader guard ra
 | Done | Merged |
 | Canceled | Decided against |
 
-(Automatic status changes from GitHub PRs are set up in SIE-85.)
+Linear moves status from PR events (SIE-85): PR ready for review → In Review (verified), PR merged → Done (set in Linear, not yet verified). Todo and In Progress are set by hand.
 
 ## Working as one developer
 - One active milestone and at most two tickets in progress.
@@ -111,7 +111,6 @@ Specs first, then code. Scope of this ticket is only this flow; broader guard ra
 - Agents never merge their own PRs.
 
 ## Open items (owned by other tickets)
-- Exact commit message and PR title format (SIE-85).
 - Which commands agents may run without asking, and which are denied (SIE-86).
 - PR template checklist and review agent (SIE-87).
 - Weekly code/spec sync: what is compared against what, how the comparison is done, and who the owner is (SIE-93).

@@ -15,7 +15,7 @@ Parent: [agent-workflow.md](agent-workflow.md).
 3. **Commands.** Build, test, lint. One line each.
 4. **Folder map.** Top-level folders and what they hold. One line each.
 5. **Where things live.** Specs, contracts and ADRs: all in `document-specs`. Code repos never hold contracts.
-6. **Conventions.** Branch = Linear `gitBranchName`. One ticket, one branch, one PR. Reuse approved patterns; ask before a new library or convention. No secrets.
+6. **Conventions.** Branch `type/SIE-xxx/short-summary`, commits `type(SIE-xxx): message` (see CONVENTIONS.md). One ticket, one branch, one PR. Reuse approved patterns; ask before a new library or convention. No secrets.
 7. **Do not touch.** Generated files, tool-managed folders, other repos' contracts.
 
 ## Where things live (all in `document-specs`)
