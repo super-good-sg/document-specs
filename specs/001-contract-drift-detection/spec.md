@@ -24,7 +24,7 @@ A developer or agent opens a pull request in a code repo. The system checks that
 
 1. **Given** generated code that matches the pinned contract, **When** a pull request is opened, **Then** the check passes.
 2. **Given** a hand edit to generated code, **When** a pull request is opened, **Then** the check fails and shows which output differs from what the pinned contract produces.
-3. **Given** the latest contract is ahead of the pin, **When** an unrelated pull request (for example a README change) is opened, **Then** the check passes.
+3. **Given** the latest contract is ahead of the pin, **When** an unrelated pull request (for example a README change) is opened and the generator is unchanged, **Then** the check passes.
 4. **Given** the pin is moved to a newer contract and the code is regenerated in the same pull request, **When** the pull request is opened, **Then** the check passes.
 
 ---
@@ -67,10 +67,10 @@ During the same weekly run, the system checks the contracts in the docs repo aga
 - The pinned contract version cannot be fetched: the PR check fails with a message naming the pin. It never passes silently.
 - The code generator fails or is missing: the PR check fails and shows the generator's own error.
 - The pin file is missing or malformed: the PR check fails; the system does not guess a version.
-- The generator itself is upgraded and its output changes: the PR check fails until the code is regenerated in the same pull request. The failure message says this can be the cause.
+- The generator itself is upgraded and its output changes: the PR check fails until the code is regenerated in the same pull request. The failure message says this can be the cause. [NEEDS CLARIFICATION: should the generator version be part of the pin, so a generator upgrade is a deliberate pin move and cannot fail unrelated pull requests?]
 - The weekly run finds more than 20 items: the report lists 20 and states how many more exist.
 - The weekly run itself fails: the owner is told in the same week. A silent failure must not look like "no drift".
-- No contract exists yet in the docs repo: both checks report "nothing to compare" and do not fail.
+- No contract has been published yet in the docs repo: both checks report "nothing to compare" and do not fail, and a code repo without a pin is accepted. From the first published contract on, a repo without a pin fails the PR check (FR-001), and a pin naming a version that cannot be fetched always fails (FR-003).
 - A code repo has no generated code yet: the PR check passes with "nothing to compare".
 - The owner cancels a ticket made from a report item: the item is not listed again for the same contract change.
 
@@ -83,19 +83,21 @@ During the same weekly run, the system checks the contracts in the docs repo aga
 - **FR-003**: A failed PR check MUST show what differs and MUST NOT pass when the contract, the generator, or the pin cannot be read.
 - **FR-004**: The PR check MUST NOT compare against the latest contract, only against the pin, so a contract change never fails unrelated pull requests.
 - **FR-005**: Once a week the system MUST compare each code repo's pin with the latest contract and record, per repo, how far it is behind and which contracts changed.
-- **FR-006**: Once a week the system MUST compare the contracts in the docs repo against each other and record disagreements as spec conflicts.
+- **FR-006**: Once a week the system MUST compare the contracts in the docs repo against each other and record disagreements as spec conflicts. [NEEDS CLARIFICATION: which differences count as a disagreement: field names only, or also types, required-ness and enum values?]
 - **FR-007**: The weekly run MUST produce at most one open drift report, addressed to the owner, and MUST add to an open report instead of opening a second.
-- **FR-008**: A drift report MUST list at most 20 items and state how many more exist.
-- **FR-009**: Each report item MUST name its kind (drift or spec conflict), the contract and code location involved, and a stable key that is the same on every run for the same difference.
+- **FR-008**: A drift report MUST list at most 20 items, oldest first, and state how many more exist. Items that already have a ticket (FR-015) or were rejected (FR-011) do not count toward the 20 or the remainder, so acting on items brings the next ones into view.
+- **FR-009**: Each report item MUST name its kind (drift or spec conflict), the contract or contracts involved (and, for drift, the code repo and location), and a stable key that is the same on every run for the same difference.
 - **FR-010**: The system MUST NOT create tickets by itself. A ticket is created only when the owner asks for it for a chosen item.
-- **FR-011**: The system MUST NOT list again an item the owner rejected, until the contract it concerns changes.
+- **FR-011**: The system MUST NOT list again an item the owner rejected, until a contract it concerns changes (for a spec conflict, either of the two contracts involved).
 - **FR-012**: If the weekly run fails, the system MUST tell the owner within the same week.
 - **FR-013**: The weekly run MUST NOT hold any credential for the ticket tracker.
+- **FR-014**: If the weekly run cannot read a code repo's pin or the pinned contract, the repo MUST appear in the report as "could not compare" with the reason. It MUST NOT be left out.
+- **FR-015**: When the owner asks for a ticket for an item, the report MUST show that ticket on the item and MUST NOT offer the item again as new while the ticket is open.
 
 ### Key Entities
 
 - **Contract**: A definition in the docs repo that code is built to match. Has a version (a commit in the docs repo).
-- **Pin**: The contract version one code repo follows. One per code repo.
+- **Pin**: The contract version one code repo follows. One per code repo. [NEEDS CLARIFICATION: is a pin one docs-repo commit covering all contracts, with each code repo declaring which contracts it consumes, or one version per contract? This decides when a repo counts as behind.]
 - **Drift finding**: One difference, with a stable key, a kind, the contract and the code location involved.
 - **Drift report**: One list of findings for the owner, capped at 20 items, with an open or closed state.
 - **Spec conflict**: Two contracts in the docs repo that disagree, naming both and the field involved.
@@ -104,13 +106,13 @@ During the same weekly run, the system checks the contracts in the docs repo aga
 
 ### Measurable Outcomes
 
-- **SC-001**: A pull request that hand-edits generated code fails the PR check in 100% of cases.
-- **SC-002**: A pull request that changes no generated code passes the PR check even when the latest contract is ahead of the pin, with zero extra steps for the author.
+- **SC-001**: A pull request that hand-edits generated code fails the PR check in 100% of cases, tested with at least one hand edit in each kind of generated file.
+- **SC-002**: A pull request that changes no generated code passes the PR check even when the latest contract is ahead of the pin, as long as the generator is unchanged, with zero extra steps for the author.
 - **SC-003**: After a contract changes, the owner learns which code repos are behind within one week, without opening any code repo.
 - **SC-004**: No drift report lists more than 20 items, and no second report exists while one is open.
 - **SC-005**: Zero tickets are created without an explicit instruction from the owner.
 - **SC-006**: A failed weekly run is visible to the owner within the same week.
-- **SC-007**: A PR check run on a repo of the expected size finishes in under 5 minutes, so it does not slow merging.
+- **SC-007**: A PR check run finishes in under 5 minutes on the standard CI runner, measured on the largest code repo at that time,, so it does not slow merging.
 
 ## Assumptions
 
@@ -120,7 +122,7 @@ During the same weekly run, the system checks the contracts in the docs repo aga
 - The owner is the person who runs the project today (Sieu). The report goes to that person.
 - The report and the PR check run where the repos already are (the GitHub organisation). The exact job mechanism is decided in the plan, not here.
 - The pin file is called `contract.lock` as a working name. The name may change in the plan.
-- The cap of 20 items, the "tell the owner when the weekly run fails" rule and the 5-minute target (FR-008, FR-012, SC-007) were proposed by the assistant and are still to be confirmed by the owner. Everything else above was decided by the owner.
+- The cap of 20 items, the "tell the owner when the weekly run fails" rule and the 5-minute target (FR-008, FR-012, SC-007), the oldest-first order (FR-008), the "could not compare" rule (FR-014) and the ticketed state (FR-015) were proposed by the assistant, the last three after an independent review, and are still to be confirmed by the owner. Everything else above was decided by the owner.
 - The docs repo and the code repos are public, so fetching a contract version needs no credential.
 - Depends on the first contract and the first generated code existing. Until then, building the checks has nothing to run against; this spec is written first, as the project works specs-first.
 - Relation to existing tickets: SIE-93 (weekly report) covers User Stories 2 and 3 for version one. A new ticket is needed for User Story 1 (the blocking PR check).
