@@ -11,4 +11,5 @@ Code repos record one pinned contract version, and the PR drift check compares g
 
 - Every code repo carries one extra small file (the pin).
 - The check needs a code generator that produces the same output on every run; the spec records this as a precondition.
-- The generator's own version is not part of the pin yet. A generator upgrade can change output and fail unrelated pull requests until the code is regenerated; whether the pin should include the generator version is open in the spec.
+- The pin includes the generator version, so a generator upgrade is a deliberate pin move and cannot fail unrelated pull requests.
+- The pin lists the contracts the repo consumes, so a change to a contract it does not use never makes the repo "behind".

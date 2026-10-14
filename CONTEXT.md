@@ -9,11 +9,11 @@ A machine-readable definition in the docs repo (an OpenAPI file or the order sch
 _Avoid_: API doc, interface file
 
 **Pin**:
-The one contract version a code repo declares it follows, recorded in that repo and changed only by a deliberate pull request.
+The docs-repo commit, generator version and list of consumed contracts a code repo declares it follows, recorded in that repo and changed only by a deliberate pull request.
 _Avoid_: lock, version bump (the act of changing it is "moving the pin")
 
 **Drift**:
-A difference between a code repo and the contract version it is pinned to, or between the pin and the latest contract. The contract is right; the code repo is what changes.
+A difference between a code repo and its pinned contracts, or a contract the repo consumes having changed since its pin. The contract is right; the code repo is what changes.
 _Avoid_: conflict, mismatch, out of sync
 
 **Contract ahead**:
