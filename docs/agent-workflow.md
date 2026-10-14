@@ -103,7 +103,7 @@ Specs first, then code. Scope of this ticket is only this flow; broader guard ra
 | Done | Merged |
 | Canceled | Decided against |
 
-Linear moves status from PR events (SIE-85): PR ready for review → In Review (verified), PR merged → Done (set in Linear, not yet verified). Todo and In Progress are set by hand.
+Linear moves status from PR events (SIE-85): PR ready for review → In Review (verified), PR merged → Done (both verified). Todo and In Progress are set by hand.
 
 ## Working as one developer
 - One active milestone and at most two tickets in progress.
