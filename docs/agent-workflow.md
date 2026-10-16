@@ -21,7 +21,7 @@ Details owned by later tickets: CLAUDE.md files (SIE-84), Linear/GitHub conventi
 | 5. Build | Agent | Implement only what the brief asks. Tests alongside. Run build, test and lint. |
 | 6. Stop and ask | Agent | Whenever a stop rule below applies. |
 | 7. PR | Agent | Push the branch, open a PR that links the Linear issue and the contract or doc section, and fills the PR checklist. |
-| 8. Review | CI + reviewer | CI passes, then a review pass checks the diff against the brief and contract (SIE-87). |
+| 8. Review | Claude + Codex, then Sieu | CI passes, the agents review the diff locally against the brief and contract, then Sieu approves (see Review gate). |
 | 9. Merge | Sieu | Merge with the merge button (a merge commit, no squash). Linear moves the issue to Done. Remove the worktree (`sieujs-cleanup`). |
 
 ## Task brief template (Linear issue description)
@@ -86,6 +86,18 @@ Specs first, then code. Scope of this ticket is only this flow; broader guard ra
 - After an error, Claude continues from the current working tree and reviews the diff Codex left before building on it (proposed, to confirm).
 - Quota cannot be checked ahead of time, so a failed call is the only signal.
 
+## Review gate
+Decided in SIE-87. A PR passes when Sieu approves it, after the agents have reviewed it.
+- **Who reviews:** Claude and Codex both review the diff against the brief and the linked contract or doc section.
+- **Where:** locally, before the PR is marked ready. Running it in CI is a later ticket.
+- **Findings:** every finding is fixed, even when only one reviewer raised it, then the diff is re-reviewed.
+- **Errors:** if a Codex call errors, Claude reviews alone (see Claude and Codex). If Claude errors, the review stops and the PR is not approved until it can run.
+- **Evidence:** the PR template has a "Review result" section for the review summary and a checklist item. Both are trust-based: a local review can be skipped, so this is a convention, not a guard rail. Only Sieu's approval blocks the merge.
+- **Proposed (AI decision, to confirm):**
+  - After 2 fix-and-re-review rounds with findings still open, stop and Sieu decides.
+  - If the PR links `N/A` instead of a contract, the reviewer checks against the ticket's acceptance criteria and says "no contract linked".
+  - If Codex errored, the review summary says "Claude only".
+
 ## Patterns
 - Knowledge base: the local sieujs `knowledge-base/` directory (outside the repos on purpose; its location is set in the developer's local setup, not in this doc).
 - Read `index.md` first; open only the relevant pattern files.
@@ -119,7 +131,7 @@ Linear moves status from PR events (SIE-85): PR ready for review → In Review (
 - Agents never merge their own PRs.
 
 ## Open items (owned by other tickets)
-- PR template checklist and review agent (SIE-87).
+- Running the review in CI (no ticket yet; SIE-92 was canceled).
 - Weekly code/spec sync: what is compared against what, how the comparison is done, and who the owner is (SIE-93).
 - Whether a Codex error should also be reported somewhere (log, Linear comment), and whether Codex-only mode is ever wanted.
 - Whether sandboxing (Docker Sandboxes) or Docker Agent is added later: deferred (see the 2026-10-12 Docker Agent discussion note).
