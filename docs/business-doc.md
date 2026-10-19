@@ -64,9 +64,9 @@ VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 ## Receipts and sharing
 
 - A receipt is a PDF. Print uses the browser's print dialog.
-- Share is a **hand-off**: the user sends the PDF from their own Zalo or Messenger app through the browser share sheet. There is no account setup, no cost and no approval.
+- Share is a **hand-off**: the user sends the PDF from their own Zalo or Messenger app through the browser share sheet. This is expected to need no account setup, cost or approval; the spike below confirms it.
 - Before building, a small spike confirms that the mobile browser share sheet can send a PDF to Zalo.
-- Direct send (the app messages the customer on its own) is a later ticket. It needs a verified Zalo Official Account with per-message fees, and for Messenger a Facebook Page, App Review and the 24-hour messaging rule.
+- Direct send (the app messages the customer on its own) is a later ticket. It needs a verified Zalo Official Account with per-message fees, and for Messenger a Facebook Page, App Review and the 24-hour messaging rule. These requirements come from vendor and Meta documentation read on 2026-10-19 and are to verify before building.
 
 ## Languages
 
@@ -98,4 +98,5 @@ Extraction accuracy decides whether the product is usable. The bar to launch: at
 - What are the beta users' yearly revenue, tax method and current e-invoice provider? These decide which VAT duties apply and which provider comes first.
 - Is VAT recorded per line item or per order? Verify against the legal rules before the order schema (SIE-24).
 - Which e-invoice provider, and does it need a cash-register integration for some users?
+- What are the order status names? The design uses Pending and Confirmed, and the plan draft says draft and confirmed. Settle in SIE-24 and make the doc match.
 - Does VAT apply to purchase orders (the user buying from a supplier), or only to sales orders? Settle in SIE-96.
