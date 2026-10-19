@@ -1,8 +1,8 @@
 # Super Good: business doc v1
 
-Status: draft for review (SIE-17). Decisions below were settled in a grilling session on 2026-10-19. Anything still unconfirmed is under [Open questions](#open-questions).
+Status: draft for review (SIE-17). Anything not yet verified is marked "to verify" or listed under [Open questions](#open-questions).
 
-Source: the 2026-10-12 big-picture and Linear plan notes, and the `super-good.pen` design. Terms follow [CONTEXT.md](../CONTEXT.md).
+Source: the 2026-10-12 big-picture and Linear plan notes, and the `super-good.pen` design (outside this repo until SIE-20 copies it in).
 
 ## What it is
 
@@ -57,9 +57,9 @@ Supporting scope: contacts (customer or supplier), sign-in, and a Vietnamese and
 VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 
 - A **licensed e-invoice provider** issues the legal invoice. The app does not issue invoices itself.
-- The provider sits behind a swappable port, in the same way as the AI extractor. The first provider is the one the beta users already use.
-- Invoice issuing is its own milestone and gets its own spec. The order schema (SIE-24) carries the direction and the VAT fields.
-- The tax rules (which businesses must issue e-invoices, from what revenue, VAT rates, exemptions) are **to verify with the beta user's accountant**. This doc lists no rates, thresholds or dates, because sources disagreed when checked.
+- The provider sits behind a swappable port, in the same way as the AI extractor. The provider is chosen in SIE-96.
+- Invoice issuing gets its own spec (SIE-96). The order schema (SIE-24) carries the direction and the VAT fields.
+- The tax rules (which businesses must issue e-invoices, from what revenue, VAT rates, exemptions) are **to verify with the beta user's accountant**. This doc lists no rates, thresholds or dates, because they are not yet verified against official sources.
 
 ## Receipts and sharing
 
@@ -98,4 +98,4 @@ Extraction accuracy decides whether the product is usable. The bar to launch: at
 - What are the beta users' yearly revenue, tax method and current e-invoice provider? These decide which VAT duties apply and which provider comes first.
 - Is VAT recorded per line item or per order? Verify against the legal rules before the order schema (SIE-24).
 - Which e-invoice provider, and does it need a cash-register integration for some users?
-- The design says "A VAT invoice will be issued". Update the copy to match this doc.
+- Does VAT apply to purchase orders (the user buying from a supplier), or only to sales orders? Settle in SIE-96.
