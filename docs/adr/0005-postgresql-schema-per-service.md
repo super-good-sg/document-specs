@@ -1,6 +1,6 @@
 # One PostgreSQL server, one schema and one database user per service
 
-All services share one PostgreSQL Flexible Server. Each service has its own schema and its own database user, and that user has rights only on that schema. A service cannot read another service's tables, so "no cross-service joins" is enforced by permission and not by convention. Keycloak keeps its own database. Migrations use EF Core and are owned by each service.
+All services share one PostgreSQL Flexible Server. Each service has its own schema and its own database user, and that user has rights only on that schema. A service cannot read another service's tables, so "no cross-service joins" is enforced by permission and not by convention. The schemas are `orders` (orders service), `catalog` (catalog and contacts service) and `jobs` (AI and jobs worker). The gateway holds no data. Keycloak keeps its own database on the same server. Migrations use EF Core and are owned by each service.
 
 ## Considered Options
 
@@ -9,6 +9,6 @@ All services share one PostgreSQL Flexible Server. Each service has its own sche
 
 ## Consequences
 
-- Each service migration also creates its schema and grants, which adds a small setup step to the service template.
+- Schemas and grants are created by a migration role that only the deploy pipeline holds. The service users get runtime rights on their own schema only. This adds a small setup step to the service template.
 - Data from another service is read through that service's API, never by a query.
 - One server is one failure domain. Back it up as one unit and revisit if a service needs its own scaling.

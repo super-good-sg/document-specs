@@ -4,11 +4,11 @@ Voice notes and photos go to Gemini only on the paid tier, whose terms say promp
 
 ## Decision
 
-- **Original media:** voice notes and photos are stored in Blob Storage and deleted 30 days after extraction by a lifecycle rule. This leaves time for the user to review again.
+- **Original media:** voice notes and photos are stored in Blob Storage and deleted 30 days after extraction by a lifecycle rule, or 30 days after upload if extraction never ran. This leaves time for the user to review again.
 - **Extracted orders:** kept as long as the account exists.
-- **Eval set:** built only from recordings of beta users who gave written consent.
+- **Eval set:** built only from recordings of beta users who gave written consent. Those recordings are copied into the eval set and are exempt from the 30-day deletion.
 - **Size caps:** media length and file size are capped at upload.
-- **Launch blocker:** Vietnam's Personal Data Protection Law (No. 91/2025/QH15, in force since 1 January 2026) requires an impact assessment for sending personal data abroad. Gemini calls are such a transfer, so the assessment is finished before launch, with a Vietnamese lawyer.
+- **Launch blocker:** Vietnam's Personal Data Protection Law (No. 91/2025/QH15, reported in force since 1 January 2026) is reported to require an impact assessment for sending personal data abroad. Gemini calls are such a transfer, so a Vietnamese lawyer confirms the duty and the assessment is finished before launch.
 
 ## Considered Options
 
