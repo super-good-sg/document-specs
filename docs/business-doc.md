@@ -1,6 +1,6 @@
 # Super Good: business doc v1
 
-Status: draft for review (SIE-17). Anything not yet verified is marked "to verify" or listed under [Open questions](#open-questions).
+Status: draft for review (SIE-17). Anything not yet verified is marked "to verify" or listed under [Open questions](#open-questions). Items Claude added that the owner has not reverified are listed in [reverify.md](reverify.md).
 
 Source: the 2026-10-12 big-picture and Linear plan notes, and the `super-good.pen` design (outside this repo until SIE-20 copies it in).
 
@@ -12,7 +12,7 @@ A mobile-first web app (installable as a PWA) for taking orders. A user creates 
 
 The first user is a **supplier or wholesaler who takes orders from restaurants**, and also buys from their own suppliers. They work from a phone, often while busy, in Vietnamese or English, with prices in VND. They are a Hộ kinh doanh (household business).
 
-- Launch is a private beta with one to three named users. Their real voice notes and receipts feed the eval set (SIE-49).
+- Launch is a private beta with one to three named users. Their real voice notes and receipts feed the eval set (SIE-49), with their written consent.
 - Onboarding also offers other business types (Restaurant, Retail & wholesale). They stay selectable but are not tested or designed for in v1.
 - Each user has their own account, contacts, catalog and orders. Nothing is shared between users.
 - Sign-in is by email and password, Google or Facebook.
@@ -83,7 +83,7 @@ VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 - Issuing invoices without a licensed provider.
 - Multi-user teams, roles and sharing between accounts.
 - Other languages beyond Vietnamese and English.
-- Additional AI providers beyond the first, and per-user provider routing.
+- Additional AI providers beyond the first, except a second adapter built to test the port (ADR 0006), and per-user provider routing.
 - Self-hosted speech models.
 - Push notifications. Job results arrive by polling or in-app updates.
 - Offline order capture. Only the app shell works offline.
