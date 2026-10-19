@@ -1,5 +1,7 @@
 # Use self-hosted Keycloak for identity
 
+Status: proposed. Parts not yet reverified by the owner are listed in [reverify.md](../reverify.md).
+
 Sign-in runs on Keycloak, deployed as a container on Azure Container Apps with its own PostgreSQL database. Users sign in with email and password, Google or Facebook. The web app uses OIDC with PKCE, and the gateway validates the Keycloak JWT.
 
 ## Considered Options

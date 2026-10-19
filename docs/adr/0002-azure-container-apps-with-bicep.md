@@ -1,5 +1,7 @@
 # Host on Azure Container Apps, defined in Bicep
 
+Status: proposed. Parts not yet reverified by the owner are listed in [reverify.md](../reverify.md).
+
 Services run on Azure Container Apps, and every environment (dev, staging, production) is created from the same Bicep files. Azure Kubernetes Service (AKS) is not used. One person runs this system, so the platform has to need as little day-to-day operation as possible.
 
 ## Considered Options

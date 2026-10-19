@@ -1,5 +1,7 @@
 # Data handling for audio and images sent to Gemini
 
+Status: proposed. Parts not yet reverified by the owner are listed in [reverify.md](../reverify.md).
+
 Voice notes and photos go to Gemini only on the paid tier, whose terms say prompts and files are not used to improve Google's products. We request zero data retention for the Gemini project and fall back to the paid-tier terms if it is refused. The API key lives in Key Vault (SIE-57).
 
 ## Decision

@@ -1,5 +1,7 @@
 # Gemini is the first adapter behind IOrderExtractor
 
+Status: proposed. Parts not yet reverified by the owner are listed in [reverify.md](../reverify.md).
+
 Extraction goes through a port at task level, `IOrderExtractor`, with `ExtractFromAudio` and `ExtractFromImage`. Both return one canonical `ExtractionResult`: the order schema, a confidence, usage and the provider. Gemini, called over the Google API, is the first adapter. It is the starting point, not a permanent choice. The eval set (SIE-49, SIE-52) decides, against the launch bar in the business doc: at least 80% of orders confirmed with one edit or fewer, in Vietnamese and English. The 80% is a starting number, adjusted after the first run. The ADR names no model version, so the model can change without rewriting it.
 
 ## Considered Options

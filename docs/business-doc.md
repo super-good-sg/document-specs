@@ -1,6 +1,6 @@
 # Super Good: business doc v1
 
-Status: draft for review (SIE-17). Anything not yet verified is marked "to verify" or listed under [Open questions](#open-questions).
+Status: draft for review (SIE-17). Anything not yet verified is marked "to verify" or listed under [Open questions](#open-questions). Items Claude added that the owner has not reverified are listed in [reverify.md](reverify.md).
 
 Source: the 2026-10-12 big-picture and Linear plan notes, and the `super-good.pen` design (outside this repo until SIE-20 copies it in).
 
