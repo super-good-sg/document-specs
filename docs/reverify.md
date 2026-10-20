@@ -2,6 +2,8 @@
 
 Items Claude added or researched while writing the business doc and ADRs 0002 to 0007. They are proposals, not decisions, until the owner reverifies each one against their own knowledge. Do that at the ticket named in the last column, before design or code depends on the item. When an item is reverified, change its Status to `verified YYYY-MM-DD` or edit the doc, and only then treat it as decided.
 
+Status: `unverified` is the default. `unverified, owner researching` means the owner chose to research it first. `verified YYYY-MM-DD` means the owner confirmed it from their own knowledge.
+
 Source: **proposed** is Claude's suggestion that the owner accepted without researching it. **research** is Claude's web search, from secondary sources.
 
 | Item | Doc | Source | Status | Reverify at |

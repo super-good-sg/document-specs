@@ -23,8 +23,8 @@
     {
       "id": "upload",
       "type": "backend",
-      "label": "Upload API",
-      "sublabel": "jobs schema"
+      "label": "Jobs API",
+      "sublabel": "AI + jobs service"
     },
     {
       "id": "blob",
@@ -42,7 +42,7 @@
       "id": "worker",
       "type": "backend",
       "label": "AI worker",
-      "sublabel": "IOrderExtractor"
+      "sublabel": "AI + jobs service"
     },
     {
       "id": "gemini",
@@ -70,18 +70,13 @@
     },
     {
       "from": 432,
-      "to": 565,
+      "to": 575,
       "label": "Create order"
     },
     {
-      "from": 575,
-      "to": 655,
+      "from": 582,
+      "to": 720,
       "label": "Poll"
-    },
-    {
-      "from": 662,
-      "to": 800,
-      "label": "Review"
     }
   ],
   "messages": [
@@ -98,7 +93,7 @@
       "from": "gateway",
       "to": "upload",
       "y": 188,
-      "label": "route upload",
+      "label": "route upload *",
       "variant": "default"
     },
     {
@@ -106,7 +101,7 @@
       "from": "upload",
       "to": "blob",
       "y": 216,
-      "label": "store media",
+      "label": "store media *",
       "variant": "default"
     },
     {
@@ -114,7 +109,7 @@
       "from": "upload",
       "to": "bus",
       "y": 244,
-      "label": "enqueue job",
+      "label": "enqueue job *",
       "variant": "dashed"
     },
     {
@@ -170,7 +165,7 @@
       "from": "worker",
       "to": "orders",
       "y": 440,
-      "label": "create pending order *",
+      "label": "create order *",
       "variant": "emphasis",
       "note": "idempotent by job ID"
     },
@@ -189,13 +184,13 @@
       "y": 523,
       "label": "complete job",
       "variant": "dashed",
-      "note": "retries on failure"
+      "note": "marks job done; retries on failure"
     },
     {
       "id": "m14",
       "from": "app",
       "to": "gateway",
-      "y": 585,
+      "y": 593,
       "label": "poll job status",
       "variant": "default",
       "note": "repeats until done"
@@ -203,42 +198,25 @@
     {
       "id": "m15",
       "from": "gateway",
-      "to": "app",
-      "y": 645,
+      "to": "upload",
+      "y": 650,
+      "label": "get job status *",
+      "variant": "default"
+    },
+    {
+      "id": "m16",
+      "from": "upload",
+      "to": "gateway",
+      "y": 678,
       "label": "done, order ID",
       "variant": "return"
     },
     {
-      "id": "m16",
-      "from": "app",
-      "to": "orders",
-      "y": 673,
-      "label": "open pending order",
-      "variant": "default",
-      "note": "via gateway"
-    },
-    {
       "id": "m17",
-      "from": "orders",
+      "from": "gateway",
       "to": "app",
-      "y": 730,
-      "label": "pending order",
-      "variant": "return"
-    },
-    {
-      "id": "m18",
-      "from": "app",
-      "to": "orders",
-      "y": 758,
-      "label": "confirm order",
-      "variant": "emphasis"
-    },
-    {
-      "id": "m19",
-      "from": "orders",
-      "to": "app",
-      "y": 786,
-      "label": "confirmed",
+      "y": 706,
+      "label": "done, order ID",
       "variant": "return"
     }
   ],
@@ -247,6 +225,12 @@
       "participant": "upload",
       "from": 183,
       "to": 278,
+      "type": "backend"
+    },
+    {
+      "participant": "upload",
+      "from": 645,
+      "to": 684,
       "type": "backend"
     },
     {
@@ -266,21 +250,18 @@
       "from": 435,
       "to": 500,
       "type": "backend"
-    },
-    {
-      "participant": "orders",
-      "from": 668,
-      "to": 792,
-      "type": "backend"
     }
   ],
   "cards": [
     {
       "dot": "amber",
-      "title": "Unverified (*)",
+      "title": "Not yet reverified (*)",
       "items": [
+        "Uploads go through the gateway to the Jobs API, which stores media and enqueues the job",
         "The AI worker calls Orders over its API, with the job ID as idempotency key",
-        "Not yet reverified by the owner: see docs/reverify.md"
+        "A job is marked done only after Orders accepts the order",
+        "Polling goes through the gateway to the Jobs API",
+        "See docs/reverify.md"
       ]
     },
     {
@@ -289,17 +270,16 @@
       "items": [
         "The upload returns a job ID at once",
         "Extraction runs in the background",
-        "Results arrive by polling, not push",
-        "Polling goes through the gateway to the Upload API"
+        "Results arrive by polling, not push"
       ]
     },
     {
-      "dot": "rose",
-      "title": "Failure path",
+      "dot": "slate",
+      "title": "Scope",
       "items": [
-        "A job completes only after Orders accepts the order",
-        "Until then the queue redelivers it and the worker retries",
-        "The job ID makes a retry safe"
+        "Voice flow only; a scan follows the same path with an image",
+        "Reviewing and confirming the order is the normal orders flow, not drawn here",
+        "Jobs API and AI worker are one service (AI and jobs)"
       ]
     }
   ]
