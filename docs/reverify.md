@@ -7,13 +7,13 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Item | Doc | Source | Status | Reverify at |
 |---|---|---|---|---|
 | Terraform rejected: no state file, new Azure features sooner | ADR 0002 | research | unverified | SIE-29 |
-| Move to AKS only if Container Apps cannot meet a requirement | ADR 0002 | proposed | unverified | SIE-19 |
-| Keycloak reasons: no per-user fees, realm as code, no lock-in | ADR 0003 | proposed | unverified | SIE-19, SIE-32 |
-| Entra External ID and Auth0 as rejected options, and their pricing | ADR 0003 | proposed, research | unverified | SIE-19 |
+| Move to AKS only if Container Apps cannot meet a requirement | ADR 0002 | proposed | unverified, owner researching | SIE-19 |
+| Keycloak reasons: no per-user fees, realm as code, no lock-in | ADR 0003 | proposed | verified 2026-10-20 | SIE-19, SIE-32 |
+| Entra External ID and Auth0 as rejected options, and their pricing | ADR 0003 | proposed, research | unverified, owner researching | SIE-19 |
 | Facebook login needs a Meta app, privacy policy URL and app review | ADR 0003 | research | unverified | SIE-34 |
-| Revisit Keycloak after a failed restore drill or an outage | ADR 0003 | proposed | unverified | SIE-19 |
-| 10,000 requests per second is a direction, not v1 traffic | ADR 0004 | proposed | unverified | SIE-19 |
-| Merge services if calls between them dominate | ADR 0004 | proposed | unverified | SIE-19 |
+| Revisit Keycloak after a failed restore drill or an outage | ADR 0003 | proposed | unverified, owner researching | SIE-19 |
+| 10,000 requests per second is a direction, not v1 traffic | ADR 0004 | proposed | verified 2026-10-20 | SIE-19 |
+| Merge services if calls between them dominate | ADR 0004 | proposed | unverified, owner researching | SIE-19 |
 | One database user per service, rights only on its own schema | ADR 0005 | proposed | unverified | SIE-26, SIE-39 |
 | Schema names `orders`, `catalog`, `jobs`; the gateway holds no data | ADR 0005 | proposed | unverified | SIE-26 |
 | Schemas and grants created by a migration role held by the deploy pipeline | ADR 0005 | proposed | unverified | SIE-26, SIE-39 |
@@ -29,4 +29,7 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Zalo and Messenger hand-off first, direct send later | business doc | proposed | unverified | SIE-97 |
 | Zalo Official Account fees and Messenger 24-hour rule | business doc, ADR 0007 | research | unverified | SIE-97 |
 | Launch bar: 80% of orders confirmed with one edit or fewer | business doc | proposed | unverified | SIE-49 |
-| Out of scope: payments and debt, push notifications, offline capture, other languages | business doc | proposed | unverified | SIE-19 |
+| Out of scope: payments and debt, push notifications, offline capture, other languages | business doc | proposed | verified 2026-10-20 | SIE-19 |
+| Orders calls catalog over its API; the gateway only routes | architecture diagram | proposed | unverified | SIE-42, SIE-43 |
+| The AI worker calls the orders API to create the pending order, with the job ID as idempotency key; use events only when a second service needs the same fact | architecture diagram | proposed | unverified | SIE-43, SIE-45 |
+| Media upload goes through the gateway to an upload endpoint that stores it in Blob Storage and creates the job | architecture diagram | proposed | unverified | SIE-44 |

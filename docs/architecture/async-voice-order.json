@@ -1,0 +1,306 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Voice order, async flow",
+    "output": "docs/architecture/async-voice-order.html",
+    "quality_profile": "showcase",
+    "locale": "en"
+  },
+  "participants": [
+    {
+      "id": "app",
+      "type": "frontend",
+      "label": "Web app",
+      "sublabel": "Angular PWA"
+    },
+    {
+      "id": "gateway",
+      "type": "security",
+      "label": "Gateway",
+      "sublabel": "JWT check"
+    },
+    {
+      "id": "upload",
+      "type": "backend",
+      "label": "Upload API",
+      "sublabel": "jobs schema"
+    },
+    {
+      "id": "blob",
+      "type": "cloud",
+      "label": "Blob Storage",
+      "sublabel": "media"
+    },
+    {
+      "id": "bus",
+      "type": "messagebus",
+      "label": "Service Bus",
+      "sublabel": "jobs queue"
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "AI worker",
+      "sublabel": "IOrderExtractor"
+    },
+    {
+      "id": "gemini",
+      "type": "external",
+      "label": "Gemini",
+      "sublabel": "Google API"
+    },
+    {
+      "id": "orders",
+      "type": "backend",
+      "label": "Orders",
+      "sublabel": "schema orders"
+    }
+  ],
+  "segments": [
+    {
+      "from": 150,
+      "to": 310,
+      "label": "Submit"
+    },
+    {
+      "from": 318,
+      "to": 430,
+      "label": "Extract"
+    },
+    {
+      "from": 432,
+      "to": 565,
+      "label": "Create order"
+    },
+    {
+      "from": 575,
+      "to": 655,
+      "label": "Poll"
+    },
+    {
+      "from": 662,
+      "to": 800,
+      "label": "Review"
+    }
+  ],
+  "messages": [
+    {
+      "id": "m01",
+      "from": "app",
+      "to": "gateway",
+      "y": 160,
+      "label": "upload voice note",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m02",
+      "from": "gateway",
+      "to": "upload",
+      "y": 188,
+      "label": "route upload",
+      "variant": "default"
+    },
+    {
+      "id": "m03",
+      "from": "upload",
+      "to": "blob",
+      "y": 216,
+      "label": "store media",
+      "variant": "default"
+    },
+    {
+      "id": "m04",
+      "from": "upload",
+      "to": "bus",
+      "y": 244,
+      "label": "enqueue job",
+      "variant": "dashed"
+    },
+    {
+      "id": "m05",
+      "from": "upload",
+      "to": "gateway",
+      "y": 272,
+      "label": "job ID",
+      "variant": "return"
+    },
+    {
+      "id": "m06",
+      "from": "gateway",
+      "to": "app",
+      "y": 300,
+      "label": "job ID",
+      "variant": "return"
+    },
+    {
+      "id": "m07",
+      "from": "bus",
+      "to": "worker",
+      "y": 328,
+      "label": "deliver job",
+      "variant": "dashed"
+    },
+    {
+      "id": "m08",
+      "from": "worker",
+      "to": "blob",
+      "y": 356,
+      "label": "read media",
+      "variant": "default"
+    },
+    {
+      "id": "m09",
+      "from": "worker",
+      "to": "gemini",
+      "y": 384,
+      "label": "audio",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m10",
+      "from": "gemini",
+      "to": "worker",
+      "y": 412,
+      "label": "ExtractionResult",
+      "variant": "return"
+    },
+    {
+      "id": "m11",
+      "from": "worker",
+      "to": "orders",
+      "y": 440,
+      "label": "create pending order *",
+      "variant": "emphasis",
+      "note": "idempotent by job ID"
+    },
+    {
+      "id": "m12",
+      "from": "orders",
+      "to": "worker",
+      "y": 495,
+      "label": "order accepted",
+      "variant": "return"
+    },
+    {
+      "id": "m13",
+      "from": "worker",
+      "to": "bus",
+      "y": 523,
+      "label": "complete job",
+      "variant": "dashed",
+      "note": "retries on failure"
+    },
+    {
+      "id": "m14",
+      "from": "app",
+      "to": "gateway",
+      "y": 585,
+      "label": "poll job status",
+      "variant": "default",
+      "note": "repeats until done"
+    },
+    {
+      "id": "m15",
+      "from": "gateway",
+      "to": "app",
+      "y": 645,
+      "label": "done, order ID",
+      "variant": "return"
+    },
+    {
+      "id": "m16",
+      "from": "app",
+      "to": "orders",
+      "y": 673,
+      "label": "open pending order",
+      "variant": "default",
+      "note": "via gateway"
+    },
+    {
+      "id": "m17",
+      "from": "orders",
+      "to": "app",
+      "y": 730,
+      "label": "pending order",
+      "variant": "return"
+    },
+    {
+      "id": "m18",
+      "from": "app",
+      "to": "orders",
+      "y": 758,
+      "label": "confirm order",
+      "variant": "emphasis"
+    },
+    {
+      "id": "m19",
+      "from": "orders",
+      "to": "app",
+      "y": 786,
+      "label": "confirmed",
+      "variant": "return"
+    }
+  ],
+  "activations": [
+    {
+      "participant": "upload",
+      "from": 183,
+      "to": 278,
+      "type": "backend"
+    },
+    {
+      "participant": "worker",
+      "from": 323,
+      "to": 530,
+      "type": "backend"
+    },
+    {
+      "participant": "gemini",
+      "from": 379,
+      "to": 418,
+      "type": "external"
+    },
+    {
+      "participant": "orders",
+      "from": 435,
+      "to": 500,
+      "type": "backend"
+    },
+    {
+      "participant": "orders",
+      "from": 668,
+      "to": 792,
+      "type": "backend"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "Unverified (*)",
+      "items": [
+        "The AI worker calls Orders over its API, with the job ID as idempotency key",
+        "Not yet reverified by the owner: see docs/reverify.md"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Async by design",
+      "items": [
+        "The upload returns a job ID at once",
+        "Extraction runs in the background",
+        "Results arrive by polling, not push",
+        "Polling goes through the gateway to the Upload API"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Failure path",
+      "items": [
+        "A job completes only after Orders accepts the order",
+        "Until then the queue redelivers it and the worker retries",
+        "The job ID makes a retry safe"
+      ]
+    }
+  ]
+}
