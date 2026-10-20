@@ -118,7 +118,7 @@
       "label": "Order events",
       "sublabel": "topic, planned *",
       "row": 4,
-      "col": 1
+      "col": 2
     },
     {
       "id": "einvoice",
@@ -127,6 +127,22 @@
       "sublabel": "planned, SIE-96",
       "row": 4,
       "col": 3
+    },
+    {
+      "id": "stream",
+      "type": "messagebus",
+      "label": "Event stream",
+      "sublabel": "Kafka, planned *",
+      "row": 4,
+      "col": 1
+    },
+    {
+      "id": "analytics",
+      "type": "backend",
+      "label": "Analytics *",
+      "sublabel": "planned",
+      "row": 4,
+      "col": 0
     }
   ],
   "connections": [
@@ -237,6 +253,18 @@
       "to": "einvoice",
       "label": "subscribes",
       "variant": "dashed"
+    },
+    {
+      "from": "orders",
+      "to": "stream",
+      "label": "order events *",
+      "variant": "dashed"
+    },
+    {
+      "from": "stream",
+      "to": "analytics",
+      "label": "consumes",
+      "variant": "dashed"
     }
   ],
   "cards": [
@@ -245,7 +273,7 @@
       "title": "Not yet reverified (*)",
       "items": [
         "Links marked *: Orders calls Catalog; AI worker calls Orders to create the order; uploads go through the gateway to the Jobs API",
-        "Planned, not built: the order-confirmed event and the e-invoice service (SIE-96). Other calls use APIs, slow work uses the queue",
+        "Planned, not built: an order-confirmed event on a Service Bus topic to the e-invoice service (SIE-96), and a Kafka-compatible event stream (Kafka or Event Hubs, undecided) for analytics. Other calls use APIs, slow work uses the queue",
         "Also unverified: schema names and one database user per service, 30-day media deletion, Gemini as first adapter, order status names",
         "See docs/reverify.md"
       ]

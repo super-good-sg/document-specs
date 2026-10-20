@@ -40,3 +40,6 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Order created or confirmed events later feed reports and analytics | architecture diagram | proposed | unverified | SIE-43 |
 | A job completed or failed event replaces polling if push is wanted | architecture diagram | proposed | unverified | SIE-45 |
 | Catalog item or price changed events with a read copy in Orders, once load requires it; start with the API call | architecture diagram | proposed | unverified | SIE-42, SIE-43 |
+| Service Bus for jobs, commands and events that need per-message handling; a Kafka-compatible stream (Kafka or Event Hubs, undecided) later for high-volume event streams such as analytics | architecture diagram | proposed | unverified | SIE-43, SIE-96 |
+| Event publishing sits behind a small interface, so the transport can change without rewriting the services | architecture diagram | proposed | unverified | SIE-43, SIE-96 |
+| Event Hubs Kafka endpoint limits (version lag, Premium or Dedicated tier for full coverage, retention 7 days on Standard) and Confluent Cloud pricing | architecture diagram | research | unverified | SIE-43, SIE-96 |
