@@ -111,6 +111,22 @@
       "sublabel": "Gemini key",
       "row": 3,
       "col": 5
+    },
+    {
+      "id": "events",
+      "type": "messagebus",
+      "label": "Order events",
+      "sublabel": "topic, planned *",
+      "row": 4,
+      "col": 1
+    },
+    {
+      "id": "einvoice",
+      "type": "backend",
+      "label": "E-invoice *",
+      "sublabel": "planned, SIE-96",
+      "row": 4,
+      "col": 3
     }
   ],
   "connections": [
@@ -209,6 +225,18 @@
       "from": "upload",
       "to": "pg",
       "label": "jobs"
+    },
+    {
+      "from": "orders",
+      "to": "events",
+      "label": "order confirmed *",
+      "variant": "dashed"
+    },
+    {
+      "from": "events",
+      "to": "einvoice",
+      "label": "subscribes",
+      "variant": "dashed"
     }
   ],
   "cards": [
@@ -217,6 +245,7 @@
       "title": "Not yet reverified (*)",
       "items": [
         "Links marked *: Orders calls Catalog; AI worker calls Orders to create the order; uploads go through the gateway to the Jobs API",
+        "Planned, not built: the order-confirmed event and the e-invoice service (SIE-96). Other calls use APIs, slow work uses the queue",
         "Also unverified: schema names and one database user per service, 30-day media deletion, Gemini as first adapter, order status names",
         "See docs/reverify.md"
       ]

@@ -35,3 +35,8 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Orders calls catalog over its API; the gateway only routes | architecture diagram | proposed | unverified | SIE-42, SIE-43 |
 | The AI worker calls the orders API to create the pending order, with the job ID as idempotency key; use events only when a second service needs the same fact | architecture diagram | proposed | unverified | SIE-43, SIE-45 |
 | Media upload goes through the gateway to an upload endpoint that stores it in Blob Storage and creates the job | architecture diagram | proposed | unverified | SIE-44 |
+| API for questions and commands that need an answer now, events for announcing a fact, a queue for slow work for one worker | architecture diagram | proposed | unverified | SIE-43, SIE-45, SIE-96 |
+| Order confirmed is the first event, consumed by the VAT e-invoice service | architecture diagram | proposed | unverified | SIE-96 |
+| Order created or confirmed events later feed reports and analytics | architecture diagram | proposed | unverified | SIE-43 |
+| A job completed or failed event replaces polling if push is wanted | architecture diagram | proposed | unverified | SIE-45 |
+| Catalog item or price changed events with a read copy in Orders, once load requires it; start with the API call | architecture diagram | proposed | unverified | SIE-42, SIE-43 |
