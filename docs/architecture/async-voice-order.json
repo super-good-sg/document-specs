@@ -93,7 +93,7 @@
       "from": "gateway",
       "to": "upload",
       "y": 188,
-      "label": "route upload *",
+      "label": "route upload",
       "variant": "default"
     },
     {
@@ -101,7 +101,7 @@
       "from": "upload",
       "to": "blob",
       "y": 216,
-      "label": "store media *",
+      "label": "store media",
       "variant": "default"
     },
     {
@@ -109,7 +109,7 @@
       "from": "upload",
       "to": "bus",
       "y": 244,
-      "label": "enqueue job *",
+      "label": "enqueue job",
       "variant": "dashed"
     },
     {
@@ -165,7 +165,7 @@
       "from": "worker",
       "to": "orders",
       "y": 440,
-      "label": "create order *",
+      "label": "create order",
       "variant": "emphasis",
       "note": "idempotent by job ID"
     },
@@ -200,7 +200,7 @@
       "from": "gateway",
       "to": "upload",
       "y": 650,
-      "label": "get job status *",
+      "label": "get job status",
       "variant": "default"
     },
     {
@@ -254,23 +254,22 @@
   ],
   "cards": [
     {
-      "dot": "amber",
-      "title": "Not yet reverified (*)",
-      "items": [
-        "Uploads go through the gateway to the Jobs API, which stores media and enqueues the job",
-        "The AI worker calls Orders over its API, with the job ID as idempotency key",
-        "A job is marked done only after Orders accepts the order",
-        "Polling goes through the gateway to the Jobs API",
-        "See docs/reverify.md"
-      ]
-    },
-    {
       "dot": "emerald",
       "title": "Async by design",
       "items": [
         "The upload returns a job ID at once",
         "Extraction runs in the background",
-        "Results arrive by polling, not push"
+        "Results arrive by polling, not push",
+        "Polling goes through the gateway to the Jobs API"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Failure path",
+      "items": [
+        "A job is marked done only after Orders accepts the order",
+        "Until then the queue redelivers it and the worker retries",
+        "The job ID makes a retry safe"
       ]
     },
     {

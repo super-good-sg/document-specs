@@ -116,33 +116,25 @@
       "id": "events",
       "type": "messagebus",
       "label": "Order events",
-      "sublabel": "topic, planned *",
+      "sublabel": "topic, planned",
       "row": 4,
-      "col": 2
-    },
-    {
-      "id": "einvoice",
-      "type": "backend",
-      "label": "E-invoice *",
-      "sublabel": "planned, SIE-96",
-      "row": 4,
-      "col": 3
+      "col": 0
     },
     {
       "id": "stream",
       "type": "messagebus",
       "label": "Event stream",
-      "sublabel": "Kafka, planned *",
+      "sublabel": "Kafka, planned",
       "row": 4,
       "col": 1
     },
     {
       "id": "analytics",
       "type": "backend",
-      "label": "Analytics *",
+      "label": "Analytics",
       "sublabel": "planned",
       "row": 4,
-      "col": 0
+      "col": 2
     }
   ],
   "connections": [
@@ -177,17 +169,17 @@
     {
       "from": "gateway",
       "to": "upload",
-      "label": "upload, status *"
+      "label": "upload, status"
     },
     {
       "from": "orders",
       "to": "catalog",
-      "label": "API *"
+      "label": "API"
     },
     {
       "from": "upload",
       "to": "bus",
-      "label": "enqueue job *",
+      "label": "enqueue job",
       "variant": "dashed"
     },
     {
@@ -199,7 +191,7 @@
     {
       "from": "upload",
       "to": "blob",
-      "label": "store media *"
+      "label": "store media"
     },
     {
       "from": "worker",
@@ -219,7 +211,7 @@
     {
       "from": "worker",
       "to": "orders",
-      "label": "create order *",
+      "label": "create order",
       "variant": "emphasis"
     },
     {
@@ -245,19 +237,13 @@
     {
       "from": "orders",
       "to": "events",
-      "label": "order confirmed *",
-      "variant": "dashed"
-    },
-    {
-      "from": "events",
-      "to": "einvoice",
-      "label": "subscribes",
+      "label": "order confirmed",
       "variant": "dashed"
     },
     {
       "from": "orders",
       "to": "stream",
-      "label": "order events *",
+      "label": "order events",
       "variant": "dashed"
     },
     {
@@ -265,24 +251,29 @@
       "to": "analytics",
       "label": "consumes",
       "variant": "dashed"
+    },
+    {
+      "from": "events",
+      "to": "catalog",
+      "label": "stock update",
+      "variant": "dashed"
     }
   ],
   "cards": [
     {
       "dot": "amber",
-      "title": "Not yet reverified (*)",
+      "title": "Planned, not built",
       "items": [
-        "Links marked *: Orders calls Catalog; AI worker calls Orders to create the order; uploads go through the gateway to the Jobs API",
-        "Planned, not built: an order-confirmed event on a Service Bus topic to the e-invoice service (SIE-96), and a Kafka-compatible event stream (Kafka or Event Hubs, undecided) for analytics. Other calls use APIs, slow work uses the queue",
-        "Also unverified: schema names and one database user per service, 30-day media deletion, Gemini as first adapter, order status names",
-        "See docs/reverify.md"
+        "Order events: a Service Bus topic. Orders publishes 'order confirmed' and Catalog listens to update the stock count",
+        "Event stream: Kafka for analytics, with an Analytics consumer",
+        "Later and not drawn: job done or failed events, catalog change events, a VAT e-invoice service (SIE-96)"
       ]
     },
     {
       "dot": "slate",
       "title": "Not drawn",
       "items": [
-        "All services run on Azure Container Apps",
+        "All services run on Azure Container Apps, defined in Terraform",
         "All services send logs and traces to Application Insights",
         "Keycloak uses its own database on the same PostgreSQL server",
         "Jobs API and AI worker are one service (AI and jobs) sharing the jobs schema"
@@ -294,7 +285,8 @@
       "items": [
         "One PostgreSQL server, one schema and one database user per service (ADR 0005)",
         "Gemini calls leave Azure (ADR 0006, 0007)",
-        "Original media is deleted 30 days after extraction, or after upload if never extracted (ADR 0007)"
+        "Original media is deleted 30 days after extraction, or after upload if never extracted (ADR 0007)",
+        "Open items are in docs/reverify.md"
       ]
     }
   ]

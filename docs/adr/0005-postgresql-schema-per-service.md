@@ -1,6 +1,6 @@
 # One PostgreSQL server, one schema and one database user per service
 
-Status: proposed. Parts not yet reverified by the owner are listed in [reverify.md](../reverify.md).
+Status: accepted. Reverified by the owner on 2026-10-21 (see [reverify.md](../reverify.md)).
 
 All services share one PostgreSQL Flexible Server. Each service has its own schema and its own database user, and that user has rights only on that schema. A service cannot read another service's tables, so "no cross-service joins" is enforced by permission and not by convention. The schemas are `orders` (orders service), `catalog` (catalog and contacts service) and `jobs` (AI and jobs worker). The gateway holds no data. Keycloak keeps its own database on the same server. Migrations use EF Core and are owned by each service.
 
