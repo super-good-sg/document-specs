@@ -46,4 +46,4 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Revisit when jobs become very many and very fast, or Service Bus limits are reached under load | ADR 0008 | proposed | unverified | SIE-45 |
 | Design file, screen list and its images live in `docs/design/` | docs repo layout | proposed | unverified | SIE-20 |
 | Core spacing scale is the 2px-step grouping `0,2,4,6,8,10,12,14,16,18,20,24,28,32,36,40`; other observed padding/gap values (1,3,5,7,9,11,17,30,33,50,56,77,88,176) are ad hoc, not scale steps | design tokens (SIE-21) | proposed | unverified | SIE-62 |
-| The 12 Roboto-styled onboarding headline text nodes are an inconsistency (should use `--font-primary`/`--font-secondary`), not an intentional third font family | design tokens (SIE-21) | proposed | unverified | SIE-62 |
+| The 19 Roboto-styled text nodes (headlines, some buttons/labels) are an inconsistency (should use `--font-primary`/`--font-secondary`), not an intentional third font family | design tokens (SIE-21) | proposed | unverified | SIE-62 |

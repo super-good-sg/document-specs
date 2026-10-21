@@ -34,16 +34,16 @@ Named font-family tokens:
 | `--font-primary` | JetBrains Mono |
 | `--font-secondary` | Geist |
 
-**To verify:** 12 text nodes (the onboarding headlines, e.g. "On boarding", 36/26/20/18pt) set `fontFamily: "Roboto"` directly instead of referencing `--font-primary`/`--font-secondary`. This reads as an inconsistency in the source file rather than an intentional third family — flagged in [reverify.md](reverify.md) rather than assumed.
+**To verify:** 19 text nodes (onboarding headlines and a few buttons/labels, e.g. "On boarding" and "Next", at 14/18/20/26/36pt) set `fontFamily: "Roboto"` directly instead of referencing `--font-primary`/`--font-secondary`. This reads as an inconsistency in the source file rather than an intentional third family — flagged in [reverify.md](reverify.md) rather than assumed.
 
-No named type-scale tokens exist (no `--text-sm`, `--heading-lg`, etc.). Raw values actually used, across 65 distinct (size, weight, line-height, letter-spacing) combinations found in the file:
+No named type-scale tokens exist (no `--text-sm`, `--heading-lg`, etc.). Raw values actually used, across 61 distinct (font family, size, weight, line-height, letter-spacing) combinations found in the file:
 
 - **Font sizes:** 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 26, 30, 32, 36, 48
 - **Font weights:** `normal`, `500`, `600`, `700`
 - **Line heights:** 1.25, 1.27, 1.29, 1.31, 1.33, 1.35, 1.4, 1.78 (mostly on the larger/Roboto headline sizes; most body text has no explicit line-height)
 - **Letter spacing:** −1, −0.5, −0.4, −0.3 (tightened, on large headline sizes), 1, 1.2 (widened, on small all-caps-style labels)
 
-This is raw exported data, not a design system: 65 combinations is too fragmented to be a type scale as-is. Rationalizing it into a small named scale (e.g. `heading`, `title`, `body`, `caption`) is a decision for SIE-62, not invented here.
+This is raw exported data, not a design system: 61 combinations is too fragmented to be a type scale as-is. Rationalizing it into a small named scale (e.g. `heading`, `title`, `body`, `caption`) is a decision for SIE-62, not invented here.
 
 ## Spacing
 
@@ -73,4 +73,4 @@ Named tokens:
 
 Recorded in [reverify.md](reverify.md), reverify at SIE-62:
 - The proposed "core" spacing scale (2px-step grouping above) vs. treating the outlier values as real scale steps.
-- Whether the 12 Roboto-styled onboarding headlines should become a third named font-family token or be restyled onto `--font-primary`/`--font-secondary`.
+- Whether the 19 Roboto-styled text nodes should become a third named font-family token or be restyled onto `--font-primary`/`--font-secondary`.
