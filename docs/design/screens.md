@@ -4,7 +4,7 @@ Snapshot of [super-good.pen](super-good.pen) (Pencil, file version 2.21), copied
 
 ## Screens (58)
 
-Top-level frames that are not components, in file order.
+Top-level frames that are not reusable components, not the `Components` sheet, and not the five section-divider bars (under 100 px tall), in file order.
 
 | # | Name | Frame ID | Size |
 |---|---|---|---|
