@@ -47,3 +47,7 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Design file, screen list and its images live in `docs/design/` | docs repo layout | proposed | unverified | SIE-20 |
 | Core spacing scale is the 2px-step grouping `0,2,4,6,8,10,12,14,16,18,20,24,28,32,36,40`; other observed padding/gap values (1,3,5,7,9,11,17,30,33,50,56,77,88,176) are ad hoc, not scale steps | design tokens (SIE-21) | proposed | unverified | SIE-62 |
 | The 19 Roboto-styled text nodes (headlines, some buttons/labels) are an inconsistency (should use `--font-primary`/`--font-secondary`), not an intentional third font family | design tokens (SIE-21) | proposed | unverified | SIE-62 |
+| Receipt is a bottom sheet opened from Order Detail's share action, not a dedicated screen | screen flow map (SIE-22) | proposed | verified 2026-10-21 | SIE-71 |
+| Product from voice/image reuses the order voice/scan capture screens (no dedicated product-capture screens exist yet) | screen flow map (SIE-22) | proposed | verified 2026-10-21 | SIE-76 |
+| Multi-document scan review (many documents merged into one review step) vs. the single `Order pre creation` screen: whether one screen covers both or a separate "many documents" review screen is needed | screen flow map (SIE-22) | proposed | unverified | SIE-70 |
+| Order list's "Done" filter chip has no matching status in the order schema (`pending`/`confirmed` only) — meaning and whether it's a real third state or a leftover from an earlier draft is unverified | screen flow map (SIE-22) | proposed | unverified | SIE-66 |
