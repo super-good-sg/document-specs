@@ -47,7 +47,8 @@
             "qty": { "$ref": "#/$defs/confidence" },
             "unit": { "$ref": "#/$defs/confidence" },
             "price": { "$ref": "#/$defs/confidence" },
-            "taxRate": { "$ref": "#/$defs/confidence" }
+            "taxRate": { "$ref": "#/$defs/confidence" },
+            "taxAmount": { "$ref": "#/$defs/confidence" }
           },
           "additionalProperties": false
         }
@@ -67,7 +68,7 @@
     "status": {
       "type": "string",
       "enum": ["pending", "confirmed"],
-      "description": "pending: extracted or drafted, awaiting review. confirmed: locked; fires the stock-update and VAT-invoice-eligible events. No further edits once confirmed in v1."
+      "description": "pending: extracted or drafted, awaiting review. confirmed: locked; fires the stock-update event (Catalog). No further edits once confirmed in v1. Whether confirmation also triggers a VAT-invoice-eligible event is deferred to SIE-96 (see docs/reverify.md)."
     },
     "contact": {
       "type": "object",
