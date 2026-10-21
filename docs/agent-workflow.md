@@ -99,8 +99,8 @@ Decided in SIE-87. A PR passes when Sieu approves it, after the agents have revi
   - If Codex errored, the review summary says "Claude only".
 
 ## Patterns
-- Knowledge base: the local sieujs `knowledge-base/` directory (outside the repos on purpose; its location is set in the developer's local setup, not in this doc).
-- Read `index.md` first; open only the relevant pattern files.
+- Knowledge base: `docs/patterns/` in this repo (SIE-88) — frontmatter (`name`/`description`/`approved_date`/`source_repo`) plus `When to use`/`Pattern`/`Notes` sections per file. SuperGood's patterns live here, not in the sieujs cross-project `knowledge-base/` (which stays for client, i.e. sfs-framework, repos): SuperGood is the owner's own product, and `document-specs` is already its source of truth.
+- Read `docs/patterns/index.md` first; open only the relevant pattern files.
 - Match found: apply it, no need to ask again.
 - Nothing matches: stop and ask. After approval, add a pattern file and an `index.md` row.
 

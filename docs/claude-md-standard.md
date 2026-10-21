@@ -29,6 +29,7 @@ Parent: [agent-workflow.md](agent-workflow.md).
 | Items to reverify | `docs/reverify.md` | exists |
 | Design file and screen list (Pencil) | `docs/design/` | exists |
 | Contracts (OpenAPI, order schema) | `docs/contracts/` | exists (order-schema.v1.json, product-schema.v1.json; SIE-24) |
+| Approved patterns | `docs/patterns/` | exists (SIE-88; see [agent-workflow.md](agent-workflow.md#patterns)) |
 | Specs (Spec Kit) | `specs/` | planned, created by Spec Kit |
 
 Paths marked planned are the intended homes. Move them here once the first file lands, and update this table.
