@@ -23,7 +23,7 @@ Splash screen (Hd7KW)
                            -> First Dashboard - Empty (Ve7uC) -> Dashboard
 ```
 
-"Skip" on Setup 1/2/3 drops straight to `First Dashboard - Empty`. Setup 2 ("How will you add orders? Scan documents / Record by voice / Enter manually") previews the three capture methods used in flow 3, but doesn't gate them — all three stay available from the dashboard regardless of what's picked here (to verify: whether this selection has any persistent effect, or is informational only).
+"Skip" on Setup 1/2/3 drops straight to `First Dashboard - Empty`. Setup 2 ("How will you add orders? Scan documents / Record by voice / Enter manually") previews the three capture methods used in flow 3.
 
 ## 2. Order list
 
@@ -71,7 +71,7 @@ Dashboard "New order" (scan) -> iPhone 16 - 7 (ujIUo)  [camera frame, no documen
                  -> iPhone 16 - image processing (sBmDL)  ["Extracting data from image"]
                       -> iPhone 16 - process done (ubv2a)  ["All done!" -> "Scan more" or "See orders"]
                       -> iPhone 16 - process fail (oc8Pg)  ["Sorry we failed" -> "Try again" (back to capture) or "Cancel"]
-                 -> on success, into the review step (flow 4) -> Order pre creation (SVuBo) -> order created (vJJXI)
+                 -> on success, into the review step (flow 4, see its note on single vs. many documents) -> Order pre creation (SVuBo) -> order created (vJJXI)
 ```
 
 **Product from voice/image** (confirmed with the owner: no dedicated screens exist yet) reuses this same voice-recording (`start recording` -> `recording` -> `record processing` -> `record result`) and scan-capture (`iPhone 16 - 7` -> `8` -> review -> `image processing` -> `process done`/`process fail`) sequence, but the end target is a catalog item (feeding into Catalog, flow 7) instead of an order. No screens distinguish "for a product" from "for an order" visually in this file version — flagged in `docs/reverify.md` for SIE-76 to confirm or design separately.
@@ -117,4 +117,4 @@ See flow 3's note: reuses the order-capture voice/scan screens; the result updat
 
 ## To verify
 
-Logged in [reverify.md](reverify.md): the exact review-screen split for single vs. many scanned documents (SIE-70), and whether product-from-voice/image gets its own screens or stays reused (SIE-76, confirmed for now as reused).
+Logged in [reverify.md](reverify.md): the exact review-screen split for single vs. many scanned documents (SIE-70), whether product-from-voice/image gets its own screens or stays reused (SIE-76, confirmed for now as reused), and whether the Order list's `Done` filter is a real third order status or a leftover (SIE-66).
