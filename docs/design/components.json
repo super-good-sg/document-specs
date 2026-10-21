@@ -1,0 +1,1952 @@
+[
+  {
+    "id": "vLg10",
+    "name": "Title Pill",
+    "type": "frame",
+    "width": null,
+    "height": null,
+    "layout": null,
+    "padding": [
+      9,
+      18
+    ],
+    "gap": 8,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "nhh4k",
+    "name": "Icon Button",
+    "type": "frame",
+    "width": 42,
+    "height": 42,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 21,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "yQ5PC",
+    "name": "Segmented Tabs",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": 3,
+    "gap": 3,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "Rh2UY",
+    "name": "Count Pill",
+    "type": "frame",
+    "width": null,
+    "height": null,
+    "layout": null,
+    "padding": [
+      8,
+      14
+    ],
+    "gap": 6,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "Q7p9Fk",
+    "name": "Product Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": 14,
+    "gap": 14,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "i0u6l",
+    "name": "Amount Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": 16,
+    "gap": 10,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "hJmiJ",
+    "name": "Form Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": 12,
+    "gap": 10,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "Z4vFv",
+    "name": "Product Row",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": 8,
+    "gap": 8,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "X8njZC",
+    "name": "History Row",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      8
+    ],
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "hWl9O",
+    "name": "Detail Row",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      0
+    ],
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "q0co6",
+    "name": "Transcribed Row",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": 8,
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "i5foHK",
+    "name": "Input Field",
+    "type": "frame",
+    "width": 321,
+    "height": null,
+    "layout": "vertical",
+    "padding": null,
+    "gap": 5,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "je4z6",
+    "name": "Action Bar",
+    "type": "frame",
+    "width": 345,
+    "height": 68,
+    "layout": null,
+    "padding": 12,
+    "gap": 8,
+    "cornerRadius": 36,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "slmk2",
+    "name": "Primary Button",
+    "type": "frame",
+    "width": 351,
+    "height": 52,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "T5yJbn",
+    "name": "Option Row Selected",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": [
+      12,
+      4
+    ],
+    "gap": 12,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "rmq9J",
+    "name": "Option Row",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": [
+      12,
+      4
+    ],
+    "gap": 12,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "g0a0C0",
+    "name": "Notification",
+    "type": "frame",
+    "width": 359,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      16
+    ],
+    "gap": 12,
+    "cornerRadius": 20,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "UGzOo",
+    "name": "Chip",
+    "type": "frame",
+    "width": null,
+    "height": null,
+    "layout": null,
+    "padding": [
+      3,
+      10
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "Fhy0B",
+    "name": "Search Bar",
+    "type": "frame",
+    "width": 240,
+    "height": 48,
+    "layout": null,
+    "padding": [
+      0,
+      16
+    ],
+    "gap": 10,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "HUKbn",
+    "name": "Filter Chip",
+    "type": "frame",
+    "width": null,
+    "height": 40,
+    "layout": null,
+    "padding": [
+      0,
+      16
+    ],
+    "gap": 8,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "z9XdKy",
+    "name": "Filter Chip Active",
+    "type": "frame",
+    "width": null,
+    "height": 40,
+    "layout": null,
+    "padding": [
+      0,
+      16
+    ],
+    "gap": null,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "qtvwX",
+    "name": "Dropdown Chip",
+    "type": "frame",
+    "width": null,
+    "height": 40,
+    "layout": null,
+    "padding": [
+      0,
+      16
+    ],
+    "gap": 6,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "D83ZYX",
+    "name": "Section Header",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "CsrpK",
+    "name": "Item Row",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": 8,
+    "gap": 8,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "u9lpo",
+    "name": "Hint Row",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": [
+      0,
+      8,
+      8,
+      8
+    ],
+    "gap": 6,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "z4kd0",
+    "name": "Loading Row",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": [
+      12,
+      8
+    ],
+    "gap": 8,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "XGMHN",
+    "name": "Swipe Row",
+    "type": "frame",
+    "width": 343,
+    "height": 52,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "HBO89",
+    "name": "Total Bar",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": [
+      4,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "iWqAN",
+    "name": "List Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      12,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "QyW3L",
+    "name": "Total Footer",
+    "type": "frame",
+    "width": 393,
+    "height": 120,
+    "layout": "vertical",
+    "padding": [
+      4,
+      24
+    ],
+    "gap": 8,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "sXagw",
+    "name": "Sticky Footer",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      16,
+      24,
+      36,
+      24
+    ],
+    "gap": 12,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "GBckQ",
+    "name": "Summary Row",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": [
+      0,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "kkoPz",
+    "name": "Summary Footer",
+    "type": "frame",
+    "width": 393,
+    "height": 180,
+    "layout": "vertical",
+    "padding": [
+      4,
+      24
+    ],
+    "gap": 8,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "nU08f",
+    "name": "Customer Card",
+    "type": "frame",
+    "width": 359,
+    "height": 109,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "D3txqY",
+    "name": "Dialog Button Secondary",
+    "type": "frame",
+    "width": 143,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      20
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "TSlxO",
+    "name": "Dialog Button Destructive",
+    "type": "frame",
+    "width": 143,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      20
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "uOZ9W",
+    "name": "Dialog Button Primary",
+    "type": "frame",
+    "width": 143,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      20
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "oZPQx",
+    "name": "Filled Field",
+    "type": "frame",
+    "width": 297,
+    "height": null,
+    "layout": "vertical",
+    "padding": null,
+    "gap": 6,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "MKzdw",
+    "name": "Mic Halo",
+    "type": "frame",
+    "width": 140,
+    "height": 140,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 70,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "FOcxW",
+    "name": "Mic Halo Recording",
+    "type": "frame",
+    "width": 140,
+    "height": 140,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 70,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "CWufR",
+    "name": "Mic Halo Processing",
+    "type": "frame",
+    "width": 140,
+    "height": 140,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 70,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "U8m5IU",
+    "name": "Recording Status",
+    "type": "frame",
+    "width": null,
+    "height": null,
+    "layout": "vertical",
+    "padding": null,
+    "gap": 4,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "lulH4",
+    "name": "Sheet Header",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "DyOf3",
+    "name": "Divider Row",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": 12,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "zHApj",
+    "name": "Upload Button",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      20
+    ],
+    "gap": 8,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "K6Fq6",
+    "name": "Stop Button",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      20
+    ],
+    "gap": 8,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "EE4c5",
+    "name": "Voice Sheet",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      16,
+      24,
+      36,
+      24
+    ],
+    "gap": 20,
+    "cornerRadius": [
+      28,
+      28,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "mwCKG",
+    "name": "Voice Sheet Recording",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      16,
+      24,
+      88,
+      24
+    ],
+    "gap": 20,
+    "cornerRadius": [
+      28,
+      28,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "rc9H9",
+    "name": "Voice Sheet Processing",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      16,
+      24,
+      176,
+      24
+    ],
+    "gap": 20,
+    "cornerRadius": [
+      28,
+      28,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "mrtAI",
+    "name": "Title Header",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "lTkhS",
+    "name": "Header With Actions",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "r2DmLN",
+    "name": "Selection Bar",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": [
+      0,
+      8,
+      8,
+      8
+    ],
+    "gap": 6,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "jSNl4",
+    "name": "Transcribed Row Selected",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": 8,
+    "gap": 10,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "Tu1ZA",
+    "name": "Remove Button",
+    "type": "frame",
+    "width": 160,
+    "height": null,
+    "layout": null,
+    "padding": [
+      14,
+      20
+    ],
+    "gap": 8,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "eD2Hk",
+    "name": "Sticky Footer Remove",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      16,
+      24,
+      36,
+      24
+    ],
+    "gap": 12,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "awFMT",
+    "name": "Swipe Left Row",
+    "type": "frame",
+    "width": 345,
+    "height": 56,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "bwJ0v",
+    "name": "Swipe Right Row",
+    "type": "frame",
+    "width": 345,
+    "height": 56,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "TcO5V",
+    "name": "Scan Title Pill",
+    "type": "frame",
+    "width": null,
+    "height": null,
+    "layout": null,
+    "padding": [
+      7,
+      8,
+      7,
+      16
+    ],
+    "gap": 10,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "c1b4AK",
+    "name": "Scan Hint",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": null,
+    "gap": 4,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "U8thr7",
+    "name": "Scan Frame",
+    "type": "frame",
+    "width": 318,
+    "height": 518,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "EozuX",
+    "name": "Document Preview Card",
+    "type": "frame",
+    "width": 345,
+    "height": 560,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 24,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "cAuFA",
+    "name": "Camera Round Button",
+    "type": "frame",
+    "width": 52,
+    "height": 52,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 26,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "aGatH",
+    "name": "Shutter",
+    "type": "frame",
+    "width": 76,
+    "height": 76,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "Ng4Mx",
+    "name": "Shutter Next",
+    "type": "frame",
+    "width": 76,
+    "height": 76,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "C7eWes",
+    "name": "Confirm Round Button",
+    "type": "frame",
+    "width": 52,
+    "height": 52,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 26,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "JEsOq",
+    "name": "Camera Controls Review",
+    "type": "frame",
+    "width": 393,
+    "height": 120,
+    "layout": null,
+    "padding": [
+      12,
+      32,
+      24,
+      32
+    ],
+    "gap": null,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "MglRt",
+    "name": "Camera Controls",
+    "type": "frame",
+    "width": 393,
+    "height": 120,
+    "layout": null,
+    "padding": [
+      12,
+      32,
+      24,
+      32
+    ],
+    "gap": null,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "OChvO",
+    "name": "Receipt Header",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": [
+      0,
+      8,
+      8,
+      8
+    ],
+    "gap": 8,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "i1pc8",
+    "name": "Receipt Row",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      8
+    ],
+    "gap": 8,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "M6ogO",
+    "name": "Receipt Line",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": [
+      6,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "vy4L6",
+    "name": "Receipt Total",
+    "type": "frame",
+    "width": 335,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      8,
+      4,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "T5j9W",
+    "name": "Order Info Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": null,
+    "padding": [
+      12,
+      16
+    ],
+    "gap": 12,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "na05p",
+    "name": "Receipt Sheet",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      12,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "a0PPI",
+    "name": "Order Summary Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      10,
+      14
+    ],
+    "gap": 6,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "NAqRy",
+    "name": "Contact Field",
+    "type": "frame",
+    "width": 321,
+    "height": null,
+    "layout": "vertical",
+    "padding": null,
+    "gap": 5,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "kHB3i",
+    "name": "Switch",
+    "type": "frame",
+    "width": 44,
+    "height": 26,
+    "layout": null,
+    "padding": 3,
+    "gap": null,
+    "cornerRadius": 13,
+    "alignItems": "center",
+    "justifyContent": "end"
+  },
+  {
+    "id": "a3tCN6",
+    "name": "Tax Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      10,
+      14
+    ],
+    "gap": 10,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "GpSj3",
+    "name": "Action Footer",
+    "type": "frame",
+    "width": 393,
+    "height": 104,
+    "layout": "vertical",
+    "padding": [
+      4,
+      24
+    ],
+    "gap": 8,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "OhJ0o",
+    "name": "Status Card",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      36,
+      24
+    ],
+    "gap": 14,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "Vy5bJ",
+    "name": "Status Card Failed",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      36,
+      24
+    ],
+    "gap": 14,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "PLVdt",
+    "name": "Progress Bar",
+    "type": "frame",
+    "width": 297,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      8,
+      0,
+      0,
+      0
+    ],
+    "gap": 8,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "fOnf3",
+    "name": "Status Card Processing",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      36,
+      24
+    ],
+    "gap": 14,
+    "cornerRadius": 24,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "J7gOX2",
+    "name": "Document Carousel",
+    "type": "frame",
+    "width": 345,
+    "height": 560,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": 24,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "o4Rxx",
+    "name": "List Title Bar",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": null,
+    "padding": [
+      0,
+      28
+    ],
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "space_between"
+  },
+  {
+    "id": "WZaGt",
+    "name": "Status Filter Chip",
+    "type": "frame",
+    "width": null,
+    "height": 38,
+    "layout": null,
+    "padding": [
+      0,
+      16
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "kybvT",
+    "name": "Status Filter Chip Active",
+    "type": "frame",
+    "width": null,
+    "height": 38,
+    "layout": null,
+    "padding": [
+      0,
+      16
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "splMx",
+    "name": "Order Row",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": [
+      12,
+      8
+    ],
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "N2mad",
+    "name": "Order Row Selected",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": [
+      12,
+      8
+    ],
+    "gap": 10,
+    "cornerRadius": 12,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "IzIss",
+    "name": "Order Swipe Row",
+    "type": "frame",
+    "width": 329,
+    "height": 78,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "Bf55t",
+    "name": "Empty State Card",
+    "type": "frame",
+    "width": 345,
+    "height": 300,
+    "layout": "vertical",
+    "padding": [
+      40,
+      24
+    ],
+    "gap": 12,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "MD7i8",
+    "name": "New Order Footer",
+    "type": "frame",
+    "width": 393,
+    "height": 104,
+    "layout": "vertical",
+    "padding": [
+      4,
+      24
+    ],
+    "gap": null,
+    "cornerRadius": [
+      20,
+      20,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "h5KHMU",
+    "name": "Catalog Row",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      8
+    ],
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "Q2WpV6",
+    "name": "Catalog Row Swatch",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      8
+    ],
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "LOzIM",
+    "name": "Price History Row",
+    "type": "frame",
+    "width": 329,
+    "height": null,
+    "layout": null,
+    "padding": [
+      10,
+      8
+    ],
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "yBzFY",
+    "name": "Contact Swipe Row",
+    "type": "frame",
+    "width": 329,
+    "height": 60,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "Wl6a1",
+    "name": "Contact Swipe Row Selected",
+    "type": "frame",
+    "width": 329,
+    "height": 60,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "aRs03",
+    "name": "Contact Edit Dialog",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": "vertical",
+    "padding": 24,
+    "gap": 14,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "RfF04",
+    "name": "Profile Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      20,
+      16
+    ],
+    "gap": 6,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "s0abrj",
+    "name": "Contact Info Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      12,
+      8
+    ],
+    "gap": 2,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "j6LLyH",
+    "name": "Recent Orders Card",
+    "type": "frame",
+    "width": 351,
+    "height": 258,
+    "layout": "vertical",
+    "padding": [
+      12,
+      8
+    ],
+    "gap": null,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "AoZSA",
+    "name": "Order Header Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": 16,
+    "gap": 10,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "DxLNH",
+    "name": "Order Customer Card",
+    "type": "frame",
+    "width": 351,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      12,
+      8
+    ],
+    "gap": 4,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "SBGvb",
+    "name": "Order Items Sheet",
+    "type": "frame",
+    "width": 351,
+    "height": 312,
+    "layout": "vertical",
+    "padding": [
+      12,
+      8
+    ],
+    "gap": 4,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "DRNO2",
+    "name": "Options Menu",
+    "type": "frame",
+    "width": 160,
+    "height": null,
+    "layout": "vertical",
+    "padding": 6,
+    "gap": null,
+    "cornerRadius": 16,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "rDvMl",
+    "name": "Brand Logo",
+    "type": "frame",
+    "width": 267,
+    "height": 64,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "X3sUPL",
+    "name": "Onboarding Actions",
+    "type": "frame",
+    "width": 279,
+    "height": 108,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "fLn8S",
+    "name": "Onboarding Actions Auth",
+    "type": "frame",
+    "width": 279,
+    "height": 108,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "LMxbq",
+    "name": "Onboarding Text",
+    "type": "frame",
+    "width": 329,
+    "height": 60,
+    "layout": "none",
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "p4TPv1",
+    "name": "Page Dots",
+    "type": "frame",
+    "width": 132,
+    "height": 6,
+    "layout": null,
+    "padding": [
+      0,
+      30
+    ],
+    "gap": 9,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": "center"
+  },
+  {
+    "id": "yFIyi",
+    "name": "Auth Tabs",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": 4,
+    "gap": 4,
+    "cornerRadius": "$--radius-pill",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "i7TYR",
+    "name": "Welcome Header",
+    "type": "frame",
+    "width": 393,
+    "height": null,
+    "layout": "vertical",
+    "padding": null,
+    "gap": 4,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "X0kh41",
+    "name": "Social Buttons",
+    "type": "frame",
+    "width": 313,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "gU4q4",
+    "name": "Auth Divider",
+    "type": "frame",
+    "width": 313,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "sab6j",
+    "name": "Forgot Row",
+    "type": "frame",
+    "width": 313,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": "end"
+  },
+  {
+    "id": "l2L0R1",
+    "name": "Password Rules",
+    "type": "frame",
+    "width": 313,
+    "height": null,
+    "layout": "vertical",
+    "padding": [
+      4,
+      0,
+      0,
+      0
+    ],
+    "gap": 6,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "omHzF",
+    "name": "Terms Text",
+    "type": "text",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": null,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "kntjB",
+    "name": "Terms Row",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": [
+      0,
+      4
+    ],
+    "gap": 10,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "FmI9p",
+    "name": "Bottom Sheet",
+    "type": "frame",
+    "width": 393,
+    "height": 502,
+    "layout": "vertical",
+    "padding": [
+      12,
+      24,
+      28,
+      24
+    ],
+    "gap": 12,
+    "cornerRadius": [
+      24,
+      24,
+      0,
+      0
+    ],
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "krp83",
+    "name": "Confirm Dialog",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": "vertical",
+    "padding": 24,
+    "gap": 16,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "qaPaF",
+    "name": "Edit Dialog",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": "vertical",
+    "padding": 24,
+    "gap": 16,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "K9Ypn",
+    "name": "Nav Item",
+    "type": "frame",
+    "width": 276,
+    "height": null,
+    "layout": null,
+    "padding": [
+      11,
+      12
+    ],
+    "gap": 12,
+    "cornerRadius": 10,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "JpNMo",
+    "name": "Nav Item Active",
+    "type": "frame",
+    "width": 276,
+    "height": null,
+    "layout": null,
+    "padding": [
+      11,
+      12
+    ],
+    "gap": 12,
+    "cornerRadius": 10,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "w7eOB6",
+    "name": "Sidebar Menu",
+    "type": "frame",
+    "width": 300,
+    "height": 1024,
+    "layout": "vertical",
+    "padding": [
+      28,
+      12,
+      20,
+      12
+    ],
+    "gap": 28,
+    "cornerRadius": null,
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "pw90K",
+    "name": "KPI Card",
+    "type": "frame",
+    "width": 252,
+    "height": null,
+    "layout": "vertical",
+    "padding": 20,
+    "gap": 14,
+    "cornerRadius": "$--radius-m",
+    "alignItems": null,
+    "justifyContent": null
+  },
+  {
+    "id": "T7jti",
+    "name": "Setup Header",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": null,
+    "gap": 16,
+    "cornerRadius": null,
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "Ql331",
+    "name": "Setup Option",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": 16,
+    "gap": 14,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  },
+  {
+    "id": "dYbLo",
+    "name": "Setup Option Selected",
+    "type": "frame",
+    "width": 345,
+    "height": null,
+    "layout": null,
+    "padding": 16,
+    "gap": 14,
+    "cornerRadius": "$--radius-m",
+    "alignItems": "center",
+    "justifyContent": null
+  }
+]
