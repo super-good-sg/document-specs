@@ -12,7 +12,7 @@ Docs repo and source of truth: specs (Spec Kit), ADRs, the order schema and Open
 - Lint: TODO (markdown lint, if added).
 
 ## Folder map
-- `docs/`: agent workflow, this standard, the business doc, ADRs (`docs/adr/`), architecture diagrams (`docs/architecture/`), the reverify register (`docs/reverify.md`), the design file and screen list (`docs/design/`), and contracts (`docs/contracts/`).
+- `docs/`: agent workflow, this standard, the business doc, ADRs (`docs/adr/`), architecture diagrams (`docs/architecture/`), the reverify register (`docs/reverify.md`), the design file and screen list (`docs/design/`), contracts (`docs/contracts/`), and approved patterns (`docs/patterns/`).
 - `.specify/`: Spec Kit config, templates and constitution (`memory/constitution.md`).
 - `.claude/`: Spec Kit agent skills.
 
@@ -21,7 +21,7 @@ Specs, ADRs and contracts (OpenAPI, order schema) all live in [document-specs](h
 
 ## Conventions
 - Branch `type/SIE-xxx/short-summary`, commits and PR title `type(SIE-xxx): message` (see [CONVENTIONS.md](https://github.com/super-good-sg/document-specs/blob/main/docs/CONVENTIONS.md)). One ticket, one branch, one PR. Never merge your own PR.
-- Reuse approved patterns; stop and ask before adding a new library or convention.
+- Reuse approved patterns (`docs/patterns/`, see `index.md`); stop and ask before adding a new library or convention.
 - No secrets in code or commits.
 - New or changed behavior starts as a spec here, merged by PR before dependent code.
 - Contract changes land here first; code repos regenerate from them.
