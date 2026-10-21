@@ -21,7 +21,7 @@ Specs, ADRs and contracts (OpenAPI, order schema) all live in [document-specs](h
 
 ## Conventions
 - Branch `type/SIE-xxx/short-summary`, commits and PR title `type(SIE-xxx): message` (see [CONVENTIONS.md](https://github.com/super-good-sg/document-specs/blob/main/docs/CONVENTIONS.md)). One ticket, one branch, one PR. Never merge your own PR.
-- Reuse approved patterns (`docs/patterns/`, see `index.md`); stop and ask before adding a new library or convention.
+- Reuse approved patterns (see [agent-workflow.md](https://github.com/super-good-sg/document-specs/blob/main/docs/agent-workflow.md#patterns)); stop and ask before adding a new library or convention.
 - No secrets in code or commits.
 - New or changed behavior starts as a spec here, merged by PR before dependent code.
 - Contract changes land here first; code repos regenerate from them.
