@@ -27,6 +27,7 @@ Parent: [agent-workflow.md](agent-workflow.md).
 | ADRs | `docs/adr/` | exists |
 | Architecture diagrams (archify JSON and HTML) | `docs/architecture/` | exists |
 | Items to reverify | `docs/reverify.md` | exists |
+| Design file and screen list (Pencil) | `docs/design/` | exists |
 | Contracts (OpenAPI, order schema) | `docs/contracts/` | planned, not created yet |
 | Specs (Spec Kit) | `specs/` | planned, created by Spec Kit |
 

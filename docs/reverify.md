@@ -44,3 +44,4 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Event Hubs has no dead-lettering or duplicate detection (Microsoft's messaging comparison page) | ADR 0008 | research | unverified | SIE-45 |
 | A PostgreSQL jobs table as the queue was considered and not chosen: retries, locking and dead-lettering built by hand, more database load | ADR 0008 | proposed | unverified | SIE-45 |
 | Revisit when jobs become very many and very fast, or Service Bus limits are reached under load | ADR 0008 | proposed | unverified | SIE-45 |
+| Design file, screen list and its images live in `docs/design/` | docs repo layout | proposed | unverified | SIE-20 |
