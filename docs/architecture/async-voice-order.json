@@ -184,7 +184,7 @@
       "y": 523,
       "label": "complete job",
       "variant": "dashed",
-      "note": "marks job done; retries on failure"
+      "note": "job row set to done"
     },
     {
       "id": "m14",

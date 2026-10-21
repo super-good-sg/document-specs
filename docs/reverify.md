@@ -1,6 +1,6 @@
 # To reverify before building
 
-Items Claude added or researched while writing the business doc and ADRs 0002 to 0007. They are proposals, not decisions, until the owner reverifies each one against their own knowledge. Do that at the ticket named in the last column, before design or code depends on the item. When an item is reverified, change its Status to `verified YYYY-MM-DD` or edit the doc, and only then treat it as decided.
+Items Claude added or researched while writing the business doc, ADRs 0002 to 0007 and the architecture diagrams. They are proposals, not decisions, until the owner reverifies each one against their own knowledge. Do that at the ticket named in the last column, before design or code depends on the item. When an item is reverified, change its Status to `verified YYYY-MM-DD` or edit the doc, and only then treat it as decided.
 
 Status: `unverified` is the default. `unverified, owner researching` means the owner chose to research it first. `unverified, ask accountant` means it needs the beta user's accountant. `deferred YYYY-MM-DD` means the owner chose to skip it for now. `verified YYYY-MM-DD` means the owner confirmed it from their own knowledge.
 
@@ -26,14 +26,14 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Licensed e-invoice provider behind a swappable port | business doc | proposed | unverified, owner researching | SIE-96 |
 | VAT e-invoice legal rules for Hộ kinh doanh (thresholds, rates, dates) | business doc | research | unverified, ask accountant | SIE-96 |
 | Zalo and Messenger hand-off first, direct send later | business doc | proposed | verified 2026-10-21 | SIE-97 |
-| Zalo Official Account fees and Messenger 24-hour rule | business doc, ADR 0007 | research | verified 2026-10-21 | SIE-97 |
+| Zalo Official Account fees and Messenger 24-hour rule | business doc | research | verified 2026-10-21 | SIE-97 |
 | Launch bar: 80% of orders confirmed with one edit or fewer | business doc | proposed | verified 2026-10-21 | SIE-49 |
 | Out of scope: payments and debt, push notifications, offline capture, other languages | business doc | proposed | verified 2026-10-20 | SIE-19 |
 | Orders calls catalog over its API; the gateway only routes | architecture diagram | proposed | verified 2026-10-21 | SIE-42, SIE-43 |
 | The AI worker calls the orders API to create the pending order, with the job ID as idempotency key; use events only when a second service needs the same fact | architecture diagram | proposed | verified 2026-10-21 | SIE-43, SIE-45 |
 | Media upload goes through the gateway to an upload endpoint that stores it in Blob Storage and creates the job | architecture diagram | proposed | verified 2026-10-21 | SIE-44 |
 | API for questions and commands that need an answer now, events for announcing a fact, a queue for slow work for one worker | architecture diagram | proposed | verified 2026-10-21 | SIE-43, SIE-45, SIE-96 |
-| Order confirmed is the first event, consumed by the VAT e-invoice service | architecture diagram | proposed | deferred 2026-10-21 | SIE-96 |
+| Order confirmed event consumed by the VAT e-invoice service (the stock listener in Catalog is already decided) | architecture diagram | proposed | deferred 2026-10-21 | SIE-96 |
 | Order created or confirmed events later feed reports and analytics | architecture diagram | proposed | verified 2026-10-21 | SIE-43 |
 | A job completed or failed event replaces polling if push is wanted | architecture diagram | proposed | verified 2026-10-21 | SIE-45 |
 | Catalog item or price changed events with a read copy in Orders, once load requires it; start with the API call | architecture diagram | proposed | verified 2026-10-21 | SIE-42, SIE-43 |

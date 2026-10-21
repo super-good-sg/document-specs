@@ -7,7 +7,7 @@ Extraction goes through a port at task level, `IOrderExtractor`, with `ExtractFr
 ## Considered Options
 
 - **A vendor-level abstraction or a generic AI gateway.** Rejected: it adds a layer for providers we do not use. The port is at the level of the task.
-- **A Python AI service.** Rejected for v1: the AI and jobs worker (ADR 0004) is a .NET service in the backend monorepo, since the hosted speech and vision APIs have .NET SDKs or plain REST (per the 2026-10-12 notes). The port stays the same if a Python service is split out later.
+- **A Python AI service.** Rejected for v1: the AI and jobs service (ADR 0004) is a .NET service in the backend monorepo, since the hosted speech and vision APIs have .NET SDKs or plain REST (per the 2026-10-12 notes). The port stays the same if a Python service is split out later.
 - **Committing to Gemini for good.** Rejected: Vietnamese accuracy differs between providers, so the choice waits for eval results.
 
 ## Consequences

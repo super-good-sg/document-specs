@@ -60,7 +60,7 @@
       "id": "catalog",
       "type": "backend",
       "label": "Catalog + contacts",
-      "sublabel": "schema catalog",
+      "sublabel": "schema catalog, stock",
       "row": 2,
       "col": 0
     },
@@ -116,7 +116,7 @@
       "id": "events",
       "type": "messagebus",
       "label": "Order events",
-      "sublabel": "topic, planned",
+      "sublabel": "Service Bus, planned",
       "row": 4,
       "col": 0
     },
@@ -243,7 +243,7 @@
     {
       "from": "orders",
       "to": "stream",
-      "label": "order events",
+      "label": "all order events",
       "variant": "dashed"
     },
     {
@@ -264,8 +264,8 @@
       "dot": "amber",
       "title": "Planned, not built",
       "items": [
-        "Order events: a Service Bus topic. Orders publishes 'order confirmed' and Catalog listens to update the stock count",
-        "Event stream: Kafka for analytics, with an Analytics consumer",
+        "Order events: a Service Bus topic. Orders publishes 'order confirmed' and Catalog listens to update the stock count (stock is part of v1)",
+        "Event stream: Kafka for analytics. Orders also streams all order events to it, and an Analytics consumer reads them",
         "Later and not drawn: job done or failed events, catalog change events, a VAT e-invoice service (SIE-96)"
       ]
     },

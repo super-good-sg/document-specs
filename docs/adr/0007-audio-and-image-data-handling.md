@@ -19,7 +19,7 @@ Voice notes and photos go to Gemini only on the paid tier, whose terms say promp
 
 ## Consequences
 
-- To verify before building: the abuse-monitoring retention (reported as 55 days), whether zero data retention is granted, whether voice recordings count as sensitive data under the Vietnamese law, and the timing of the report duties.
+- Reverified by the owner on 2026-10-21: the abuse-monitoring retention (reported as 55 days), zero data retention on request, and the impact-assessment duty under the Vietnamese law. A Vietnamese lawyer still confirms the duty before launch, and the official text is the final source.
 - If retention or cross-border rules change, only this ADR and the Blob lifecycle rule change.
 
 ## Sources

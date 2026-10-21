@@ -11,6 +11,6 @@ Services run on Azure Container Apps, and every environment (dev, staging, produ
 
 ## Consequences
 
-- Supporting services are Azure Blob Storage (media), Service Bus (the jobs queue), PostgreSQL Flexible Server, Key Vault and Application Insights.
+- Supporting services are Azure Blob Storage (media), Service Bus (the jobs queue and an order-events topic), PostgreSQL Flexible Server, Key Vault and Application Insights.
 - Container Apps limits custom networking and node-level control. Anything that needs them is a reason to revisit this ADR.
-- Revisit trigger: move to AKS only if a requirement cannot be met on Container Apps (custom networking, for example) or a second operator joins and can carry cluster work.
+- Revisit trigger (unverified, see [reverify.md](../reverify.md)): move to AKS only if a requirement cannot be met on Container Apps (custom networking, for example) or a second operator joins and can carry cluster work.

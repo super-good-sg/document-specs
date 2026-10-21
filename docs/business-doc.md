@@ -58,7 +58,7 @@ Supporting scope: contacts (customer or supplier), sign-in, and a Vietnamese and
 VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 
 - A **licensed e-invoice provider** issues the legal invoice. The app does not issue invoices itself.
-- The provider sits behind a swappable port, in the same way as the AI extractor. The provider is chosen in SIE-96.
+- The provider sits behind a swappable port, in the same way as the AI extractor (unverified, see [reverify.md](reverify.md)). The provider is chosen in SIE-96.
 - Invoice issuing gets its own spec (SIE-96). The order schema (SIE-24) carries the direction and the VAT fields.
 - The tax rules (which businesses must issue e-invoices, from what revenue, VAT rates, exemptions) are **to verify with the beta user's accountant**. This doc lists no rates, thresholds or dates, because they are not yet verified against official sources.
 
@@ -67,7 +67,7 @@ VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 - A receipt is a PDF. Print uses the browser's print dialog.
 - Share is a **hand-off**: the user sends the PDF from their own Zalo or Messenger app through the browser share sheet. This is expected to need no account setup, cost or approval; the spike below confirms it.
 - Before building, a small spike confirms that the mobile browser share sheet can send a PDF to Zalo.
-- Direct send (the app messages the customer on its own) is a later ticket. It needs a verified Zalo Official Account with per-message fees, and for Messenger a Facebook Page, App Review and the 24-hour messaging rule. These requirements come from vendor and Meta documentation read on 2026-10-19 and are to verify before building.
+- Direct send (the app messages the customer on its own) is a later ticket. It needs a verified Zalo Official Account with per-message fees, and for Messenger a Facebook Page, App Review and the 24-hour messaging rule. These requirements were reverified by the owner on 2026-10-21, and the share spike (SIE-97) confirms them in practice.
 
 ## Languages
 
