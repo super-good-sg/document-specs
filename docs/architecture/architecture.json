@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Super Good architecture v1",
+    "output": "docs/architecture/architecture.html",
+    "quality_profile": "showcase",
+    "locale": "en"
+  },
+  "layout": {
+    "mode": "grid",
+    "cols": 6,
+    "gapX": 100,
+    "gapY": 80,
+    "cellW": 130,
+    "cellH": 60
+  },
+  "components": [
+    {
+      "id": "keycloak",
+      "type": "security",
+      "label": "Keycloak",
+      "sublabel": "OIDC sign-in",
+      "row": 0,
+      "col": 1
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Angular PWA",
+      "sublabel": "mobile web app",
+      "row": 1,
+      "col": 0
+    },
+    {
+      "id": "gateway",
+      "type": "security",
+      "label": "Gateway",
+      "sublabel": "JWT check, routing",
+      "row": 1,
+      "col": 1
+    },
+    {
+      "id": "upload",
+      "type": "backend",
+      "label": "Jobs API",
+      "sublabel": "AI + jobs service",
+      "row": 1,
+      "col": 3
+    },
+    {
+      "id": "bus",
+      "type": "messagebus",
+      "label": "Service Bus",
+      "sublabel": "jobs queue",
+      "row": 1,
+      "col": 4
+    },
+    {
+      "id": "catalog",
+      "type": "backend",
+      "label": "Catalog + contacts",
+      "sublabel": "schema catalog, stock",
+      "row": 2,
+      "col": 0
+    },
+    {
+      "id": "orders",
+      "type": "backend",
+      "label": "Orders",
+      "sublabel": "schema orders",
+      "row": 2,
+      "col": 1
+    },
+    {
+      "id": "worker",
+      "type": "backend",
+      "label": "AI worker",
+      "sublabel": "AI + jobs service",
+      "row": 2,
+      "col": 4
+    },
+    {
+      "id": "gemini",
+      "type": "external",
+      "label": "Gemini",
+      "sublabel": "outside Azure",
+      "row": 2,
+      "col": 5
+    },
+    {
+      "id": "pg",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "schema per service",
+      "row": 3,
+      "col": 2
+    },
+    {
+      "id": "blob",
+      "type": "cloud",
+      "label": "Blob Storage",
+      "sublabel": "media, 30-day delete",
+      "row": 3,
+      "col": 4
+    },
+    {
+      "id": "kv",
+      "type": "security",
+      "label": "Key Vault",
+      "sublabel": "Gemini key",
+      "row": 3,
+      "col": 5
+    },
+    {
+      "id": "events",
+      "type": "messagebus",
+      "label": "Order events",
+      "sublabel": "Service Bus, planned",
+      "row": 4,
+      "col": 0
+    },
+    {
+      "id": "stream",
+      "type": "messagebus",
+      "label": "Event stream",
+      "sublabel": "Kafka, planned",
+      "row": 4,
+      "col": 1
+    },
+    {
+      "id": "analytics",
+      "type": "backend",
+      "label": "Analytics",
+      "sublabel": "planned",
+      "row": 4,
+      "col": 2
+    }
+  ],
+  "connections": [
+    {
+      "from": "web",
+      "to": "gateway",
+      "label": "HTTPS",
+      "variant": "emphasis"
+    },
+    {
+      "from": "web",
+      "to": "keycloak",
+      "label": "OIDC + PKCE",
+      "variant": "security"
+    },
+    {
+      "from": "gateway",
+      "to": "keycloak",
+      "label": "JWT validation",
+      "variant": "security"
+    },
+    {
+      "from": "gateway",
+      "to": "orders",
+      "label": "route"
+    },
+    {
+      "from": "gateway",
+      "to": "catalog",
+      "label": "route"
+    },
+    {
+      "from": "gateway",
+      "to": "upload",
+      "label": "upload, status"
+    },
+    {
+      "from": "orders",
+      "to": "catalog",
+      "label": "API"
+    },
+    {
+      "from": "upload",
+      "to": "bus",
+      "label": "enqueue job",
+      "variant": "dashed"
+    },
+    {
+      "from": "bus",
+      "to": "worker",
+      "label": "deliver job",
+      "variant": "dashed"
+    },
+    {
+      "from": "upload",
+      "to": "blob",
+      "label": "store media"
+    },
+    {
+      "from": "worker",
+      "to": "blob",
+      "label": "read media"
+    },
+    {
+      "from": "worker",
+      "to": "gemini",
+      "label": "audio, image"
+    },
+    {
+      "from": "worker",
+      "to": "kv",
+      "label": "Gemini key"
+    },
+    {
+      "from": "worker",
+      "to": "orders",
+      "label": "create order",
+      "variant": "emphasis"
+    },
+    {
+      "from": "orders",
+      "to": "pg",
+      "label": "orders"
+    },
+    {
+      "from": "catalog",
+      "to": "pg",
+      "label": "catalog"
+    },
+    {
+      "from": "worker",
+      "to": "pg",
+      "label": "jobs"
+    },
+    {
+      "from": "upload",
+      "to": "pg",
+      "label": "jobs"
+    },
+    {
+      "from": "orders",
+      "to": "events",
+      "label": "order confirmed",
+      "variant": "dashed"
+    },
+    {
+      "from": "orders",
+      "to": "stream",
+      "label": "all order events",
+      "variant": "dashed"
+    },
+    {
+      "from": "stream",
+      "to": "analytics",
+      "label": "consumes",
+      "variant": "dashed"
+    },
+    {
+      "from": "events",
+      "to": "catalog",
+      "label": "stock update",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "amber",
+      "title": "Planned, not built",
+      "items": [
+        "Order events: a Service Bus topic. Orders publishes 'order confirmed' and Catalog listens to update the stock count (stock is part of v1)",
+        "Event stream: Kafka for analytics. Orders also streams all order events to it, and an Analytics consumer reads them",
+        "Later and not drawn: job done or failed events, catalog change events, a VAT e-invoice service (SIE-96)"
+      ]
+    },
+    {
+      "dot": "slate",
+      "title": "Not drawn",
+      "items": [
+        "All services run on Azure Container Apps, defined in Terraform",
+        "All services send logs and traces to Application Insights",
+        "Keycloak uses its own database on the same PostgreSQL server",
+        "Jobs API and AI worker are one service (AI and jobs) sharing the jobs schema"
+      ]
+    },
+    {
+      "dot": "cyan",
+      "title": "Data and trust",
+      "items": [
+        "One PostgreSQL server, one schema and one database user per service (ADR 0005)",
+        "Gemini calls leave Azure (ADR 0006, 0007)",
+        "Original media is deleted 30 days after extraction, or after upload if never extracted (ADR 0007)",
+        "Open items are in docs/reverify.md"
+      ]
+    }
+  ]
+}

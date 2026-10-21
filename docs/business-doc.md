@@ -15,7 +15,7 @@ The first user is a **supplier or wholesaler who takes orders from restaurants**
 - Launch is a private beta with one to three named users. Their real voice notes and receipts feed the eval set (SIE-49), with their written consent.
 - Onboarding also offers other business types (Restaurant, Retail & wholesale). They stay selectable but are not tested or designed for in v1.
 - Each user has their own account, contacts, catalog and orders. Nothing is shared between users.
-- Sign-in is by email and password, Google or Facebook.
+- Sign-in is by email and password or Google. Facebook login is not in v1.
 
 ## Orders
 
@@ -31,7 +31,7 @@ A contact is a customer or a supplier, and the contact decides the direction. Bo
 1. **Capture.** The user records a voice note, takes or picks a photo of a document or receipt, or types the order in.
 2. **Extract.** For voice and scan, the app uploads the media and starts a job. Extraction runs in the background, so the user can leave the screen. The app shows the job status and any failure.
 3. **Review.** The user sees the extracted contact, items, quantities, units, prices and VAT, with low-confidence fields flagged. They edit anything wrong. A scan can hold several documents, so review works for one or many.
-4. **Confirm.** The order moves from pending to confirmed. Nothing is confirmed without the user's confirmation, and extracted results are always pending first.
+4. **Confirm.** The order moves from pending to confirmed. Nothing is confirmed without the user's confirmation, and extracted results are always pending first. Confirming also updates stock, through an event that Catalog listens to.
 5. **Receipt and invoice.** The user views the receipt, prints it, and shares it. If the customer needs a VAT invoice, the user issues it from the order.
 
 Manual entry is also the fallback when extraction fails.
@@ -41,6 +41,7 @@ Manual entry is also the fallback when extraction fails.
 | Capability | What the user can do |
 |---|---|
 | Product management | Create, edit and list catalog items with units and price history |
+| Stock | See an on-hand count per catalog item. A confirmed purchase order adds to it and a confirmed sales order subtracts from it. Catalog updates the count from an order-confirmed event |
 | Order management | Sales and purchase orders: list, filter by status, open, edit, confirm, act on a row |
 | Manual entry | Type an order in without voice or scan |
 | Voice to order | Speak an order and get a pending order |
@@ -57,7 +58,7 @@ Supporting scope: contacts (customer or supplier), sign-in, and a Vietnamese and
 VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 
 - A **licensed e-invoice provider** issues the legal invoice. The app does not issue invoices itself.
-- The provider sits behind a swappable port, in the same way as the AI extractor. The provider is chosen in SIE-96.
+- The provider sits behind a swappable port, in the same way as the AI extractor (unverified, see [reverify.md](reverify.md)). The provider is chosen in SIE-96.
 - Invoice issuing gets its own spec (SIE-96). The order schema (SIE-24) carries the direction and the VAT fields.
 - The tax rules (which businesses must issue e-invoices, from what revenue, VAT rates, exemptions) are **to verify with the beta user's accountant**. This doc lists no rates, thresholds or dates, because they are not yet verified against official sources.
 
@@ -66,7 +67,7 @@ VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 - A receipt is a PDF. Print uses the browser's print dialog.
 - Share is a **hand-off**: the user sends the PDF from their own Zalo or Messenger app through the browser share sheet. This is expected to need no account setup, cost or approval; the spike below confirms it.
 - Before building, a small spike confirms that the mobile browser share sheet can send a PDF to Zalo.
-- Direct send (the app messages the customer on its own) is a later ticket. It needs a verified Zalo Official Account with per-message fees, and for Messenger a Facebook Page, App Review and the 24-hour messaging rule. These requirements come from vendor and Meta documentation read on 2026-10-19 and are to verify before building.
+- Direct send (the app messages the customer on its own) is a later ticket. It needs a verified Zalo Official Account with per-message fees, and for Messenger a Facebook Page, App Review and the 24-hour messaging rule. These requirements were reverified by the owner on 2026-10-21, and the share spike (SIE-97) confirms them in practice.
 
 ## Languages
 
@@ -75,7 +76,7 @@ VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 
 ## Out of scope for v1
 
-- Stock tracking. The catalog has items, units and price history, but no quantities on hand.
+- Stock tracking beyond an on-hand count: warehouses, batches and low-stock alerts.
 - Desktop or tablet layout. The web app is mobile-width only.
 - Native iOS and Android apps.
 - Payments and debt tracking.

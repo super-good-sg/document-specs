@@ -23,7 +23,10 @@ Parent: [agent-workflow.md](agent-workflow.md).
 |---|---|---|
 | Agent workflow | `docs/agent-workflow.md` | exists |
 | This standard | `docs/claude-md-standard.md` | exists |
-| ADRs | `docs/adr/` | planned, not created yet |
+| Business doc | `docs/business-doc.md` | exists |
+| ADRs | `docs/adr/` | exists |
+| Architecture diagrams (archify JSON and HTML) | `docs/architecture/` | exists |
+| Items to reverify | `docs/reverify.md` | exists |
 | Contracts (OpenAPI, order schema) | `docs/contracts/` | planned, not created yet |
 | Specs (Spec Kit) | `specs/` | planned, created by Spec Kit |
 
