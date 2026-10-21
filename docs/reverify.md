@@ -1,6 +1,6 @@
 # To reverify before building
 
-Items Claude added or researched while writing the business doc, ADRs 0002 to 0007 and the architecture diagrams. They are proposals, not decisions, until the owner reverifies each one against their own knowledge. Do that at the ticket named in the last column, before design or code depends on the item. When an item is reverified, change its Status to `verified YYYY-MM-DD` or edit the doc, and only then treat it as decided.
+Items Claude added or researched while writing the business doc, ADRs 0002 to 0008 and the architecture diagrams. They are proposals, not decisions, until the owner reverifies each one against their own knowledge. Do that at the ticket named in the last column, before design or code depends on the item. When an item is reverified, change its Status to `verified YYYY-MM-DD` or edit the doc, and only then treat it as decided.
 
 Status: `unverified` is the default. `unverified, owner researching` means the owner chose to research it first. `unverified, ask accountant` means it needs the beta user's accountant. `deferred YYYY-MM-DD` means the owner chose to skip it for now. `verified YYYY-MM-DD` means the owner confirmed it from their own knowledge.
 
@@ -40,3 +40,7 @@ Source: **proposed** is Claude's suggestion that the owner accepted without rese
 | Kafka (or Event Hubs with the Kafka endpoint) for analytics; Service Bus for event-driven flows that need duplicate handling | architecture diagram | proposed | verified 2026-10-21 | SIE-43, SIE-96 |
 | Event publishing sits behind a small interface, so the transport can change without rewriting the services | architecture diagram | proposed | verified 2026-10-21 | SIE-43, SIE-96 |
 | Event Hubs Kafka endpoint limits (version lag, Premium or Dedicated tier for full coverage, retention 7 days on Standard) and Confluent Cloud pricing | architecture diagram | research | verified 2026-10-21 | SIE-43, SIE-96 |
+| Kafka not used for the job queue: slow jobs block a partition, parallel workers are limited by partitions, and retries and dead-lettering would have to be built | ADR 0008 | proposed | unverified | SIE-45 |
+| Event Hubs has no dead-lettering or duplicate detection (Microsoft's messaging comparison page) | ADR 0008 | research | unverified | SIE-45 |
+| A PostgreSQL jobs table as the queue was considered and not chosen: retries, locking and dead-lettering built by hand, more database load | ADR 0008 | proposed | unverified | SIE-45 |
+| Revisit when jobs become very many and very fast, or Service Bus limits are reached under load | ADR 0008 | proposed | unverified | SIE-45 |
