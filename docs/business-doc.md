@@ -59,7 +59,7 @@ VAT is in v1 and follows Vietnamese law for Hộ kinh doanh.
 
 - A **licensed e-invoice provider** issues the legal invoice. The app does not issue invoices itself.
 - The provider sits behind a swappable port, in the same way as the AI extractor (unverified, see [reverify.md](reverify.md)). The provider is chosen in SIE-96.
-- Invoice issuing gets its own spec (SIE-96). The order schema (SIE-24) carries the direction and the VAT fields.
+- Invoice issuing gets its own spec (SIE-96). The order schema (SIE-24) carries the direction and the VAT fields. VAT is recorded per line item (`taxRate` and `taxAmount`), with order-level `taxTotal`/`total` rollups; see [the order schema](contracts/order-schema.v1.json).
 - The tax rules (which businesses must issue e-invoices, from what revenue, VAT rates, exemptions) are **to verify with the beta user's accountant**. This doc lists no rates, thresholds or dates, because they are not yet verified against official sources.
 
 ## Receipts and sharing
@@ -97,7 +97,7 @@ Extraction accuracy decides whether the product is usable. The bar to launch: at
 ## Open questions
 
 - What are the beta users' yearly revenue, tax method and current e-invoice provider? These decide which VAT duties apply and which provider comes first.
-- Is VAT recorded per line item or per order? Verify against the legal rules before the order schema (SIE-24).
 - Which e-invoice provider, and does it need a cash-register integration for some users?
-- What are the order status names? The design uses Pending and Confirmed, and the plan draft says draft and confirmed. Settle in SIE-24 and make the doc match.
 - Does VAT apply to purchase orders (the user buying from a supplier), or only to sales orders? Settle in SIE-96.
+
+Settled in SIE-24: order status is `pending`/`confirmed` (lowercase, matching the order schema's `status` field — the design's Pending/Confirmed are the matching UI labels); VAT is recorded per line item, not per order.
