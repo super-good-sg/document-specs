@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://super-good.dev/schemas/order-schema.v1.json",
+  "title": "Order",
+  "description": "Canonical order schema v1 (SIE-24). Covers both directions (sale and purchase) on one model. Produced by manual entry, voice extraction, or image extraction; confirmed by the user before it drives stock and VAT invoicing.",
+  "type": "object",
+  "$defs": {
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Extractor confidence for this field, 0 (no confidence) to 1 (certain). Absent for manually-entered fields."
+    },
+    "money": {
+      "type": "number",
+      "minimum": 0,
+      "description": "A non-negative monetary amount in the order's currency. v1 only ever populates whole VND (no subunit)."
+    },
+    "item": {
+      "type": "object",
+      "properties": {
+        "catalogItemId": {
+          "type": ["string", "null"],
+          "format": "uuid",
+          "description": "Set when this line matches an existing catalog item. Null for an item not yet in the catalog; name/unit/price below are still a full snapshot either way."
+        },
+        "name": { "type": "string", "minLength": 1 },
+        "qty": { "type": "number", "exclusiveMinimum": 0 },
+        "unit": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Free-form unit of measure (e.g. \"kg\", \"thùng\", \"cái\"). No controlled unit list in v1."
+        },
+        "price": { "$ref": "#/$defs/money", "description": "Unit price." },
+        "taxRate": {
+          "type": "number",
+          "minimum": 0,
+          "description": "VAT rate for this line, as a fraction (e.g. 0.08 for 8%)."
+        },
+        "taxAmount": { "$ref": "#/$defs/money", "description": "VAT amount for this line, as confirmed (not re-derived from taxRate at read time)." },
+        "lineTotal": { "$ref": "#/$defs/money", "description": "qty * price + taxAmount, as confirmed." },
+        "confidence": {
+          "type": "object",
+          "description": "Per-field extractor confidence for this line.",
+          "properties": {
+            "name": { "$ref": "#/$defs/confidence" },
+            "qty": { "$ref": "#/$defs/confidence" },
+            "unit": { "$ref": "#/$defs/confidence" },
+            "price": { "$ref": "#/$defs/confidence" },
+            "taxRate": { "$ref": "#/$defs/confidence" },
+            "taxAmount": { "$ref": "#/$defs/confidence" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["catalogItemId", "name", "qty", "unit", "price", "taxRate", "taxAmount", "lineTotal"],
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "format": "uuid" },
+    "direction": {
+      "type": "string",
+      "enum": ["sale", "purchase"],
+      "description": "Set from the contact at order creation. Immutable after."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "confirmed"],
+      "description": "pending: extracted or drafted, awaiting review. confirmed: locked; fires the stock-update event (Catalog). No further edits once confirmed in v1. Whether confirmation also triggers a VAT-invoice-eligible event is deferred to SIE-96 (see docs/reverify.md)."
+    },
+    "contact": {
+      "type": "object",
+      "description": "Snapshot of the customer or supplier at order time, so later contact edits or deletion never retroactively change a historical order.",
+      "properties": {
+        "contactId": { "type": ["string", "null"], "format": "uuid" },
+        "name": { "type": "string", "minLength": 1 },
+        "phone": { "type": "string" },
+        "address": { "type": "string" }
+      },
+      "required": ["contactId", "name"],
+      "additionalProperties": false
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/item" }
+    },
+    "currency": {
+      "type": "string",
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 4217 currency code. v1 only ever populates \"VND\"."
+    },
+    "subtotal": { "$ref": "#/$defs/money", "description": "Sum of item qty * price, before tax." },
+    "taxTotal": { "$ref": "#/$defs/money", "description": "Sum of item taxAmount." },
+    "total": { "$ref": "#/$defs/money", "description": "subtotal + taxTotal, as confirmed." },
+    "sourceLanguage": {
+      "type": "string",
+      "enum": ["vi", "en", "mixed"],
+      "description": "Language of the capture (voice or scanned text). \"mixed\" covers mixed Vietnamese/English speech in one capture. Not applicable, but still required, for manual entry; set to the UI language."
+    },
+    "confidence": {
+      "type": "object",
+      "description": "Per-field extractor confidence for order-level fields.",
+      "properties": {
+        "contact": { "$ref": "#/$defs/confidence" }
+      },
+      "additionalProperties": false
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "confirmedAt": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Null while status is pending. Set once, when status moves to confirmed; a confirmed order cannot be edited in v1, so this never changes again."
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "id",
+    "direction",
+    "status",
+    "contact",
+    "items",
+    "currency",
+    "subtotal",
+    "taxTotal",
+    "total",
+    "sourceLanguage",
+    "createdAt",
+    "updatedAt",
+    "confirmedAt"
+  ],
+  "additionalProperties": false
+}
