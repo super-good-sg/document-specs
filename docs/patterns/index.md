@@ -7,7 +7,7 @@ pattern file every session.
 | Pattern file | Summary |
 |---|---|
 | angular-cli-default-test-lint.md | Angular (frontend-web): use `ng new` default test runner (Jasmine/Karma) and Angular ESLint, no Vitest/Jest swap |
-| angular-playwright-e2e.md | Angular (frontend-web): Playwright e2e, chromium only, config starts `ng serve` via `webServer`, specs in `e2e/` |
+| angular-playwright-e2e.md | Angular (frontend-web): Playwright e2e, chromium only, config starts `npm start` via `webServer`, specs in `e2e/` |
 | angular-state-signals-and-services.md | Angular (frontend-web): shared/local state via signals + injectable services, no NgRx/Akita unless it stops scaling |
 | ef-core-migrations-per-service.md | Backend: migrations use EF Core, owned by each service, applied via a migration role separate from the service's runtime role |
 | iorderextractor-gemini-first-adapter.md | Backend: extraction goes through the `IOrderExtractor` port (`ExtractFromAudio`/`ExtractFromImage`), Gemini first, provider chosen by DI config |
