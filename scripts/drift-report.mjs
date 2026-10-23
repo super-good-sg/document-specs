@@ -1,6 +1,11 @@
 #!/usr/bin/env node
 // Weekly drift report (SIE-93): spec.md user stories 2 and 3.
 // Pure helpers are exported for testing; main() does the real git/network/fs work.
+//
+// Usage:
+//   node scripts/drift-report.mjs              regenerate the report in place
+//   node scripts/drift-report.mjs set-status <key> <pending|rejected|ticketed> [ticketUrl]
+//                                               record an owner decision on one item
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from 'node:fs';
@@ -31,8 +36,9 @@ export function listContractFiles(dir = CONTRACTS_DIR) {
 }
 
 // Flattens a JSON Schema's `properties` into {dotPath: type}, recursing into
-// nested objects. Arrays, $ref and other schema features are out of scope
-// for v1 (FR-006 only asks for "different names or types" on named fields).
+// nested objects. Arrays, $ref, OpenAPI's components.schemas nesting and
+// other schema shapes are out of scope for v1 (FR-006 only asks for
+// "different names or types" on named fields of structured contracts).
 export function flattenSchemaFields(schema, prefix = '') {
   const fields = {};
   const properties = schema?.properties ?? {};
@@ -67,6 +73,7 @@ export function computeSpecConflicts(contracts) {
             contracts: [a.file, b.file],
             location: fieldPath,
             note: `${fieldPath} is "${typeA}" in ${a.file} but "${typeB}" in ${b.file}`,
+            scopes: [`contract:${a.file}`, `contract:${b.file}`],
           });
         }
       }
@@ -76,6 +83,9 @@ export function computeSpecConflicts(contracts) {
 }
 
 // US2 / FR-005, FR-014: one code repo's pin vs. the contracts it consumes.
+// `pin` is assumed already shape-validated by the caller (validatePin) when
+// pinError is falsy; the defensive checks below only cover direct callers
+// (tests, or a future caller) that skip that step.
 export function computeRepoDrift(repoName, pin, pinError, contractsByFile) {
   if (pinError) {
     return [{
@@ -84,11 +94,20 @@ export function computeRepoDrift(repoName, pin, pinError, contractsByFile) {
       contracts: [],
       location: `${repoName} (${PIN_FILE})`,
       note: pinError,
+      scopes: [`repo:${repoName}`],
     }];
   }
-  if (!pin || !Array.isArray(pin.consumes) || pin.consumes.length === 0) {
-    return [];
+  if (!pin || !Array.isArray(pin.consumes)) {
+    return [{
+      key: `could-not-compare:${repoName}`,
+      kind: 'could-not-compare',
+      contracts: [],
+      location: `${repoName} (${PIN_FILE})`,
+      note: `${PIN_FILE} is missing or malformed (expected a "consumes" array)`,
+      scopes: [`repo:${repoName}`],
+    }];
   }
+  if (pin.consumes.length === 0) return [];
   const findings = [];
   for (const file of pin.consumes) {
     const contract = contractsByFile[file];
@@ -98,7 +117,8 @@ export function computeRepoDrift(repoName, pin, pinError, contractsByFile) {
         kind: 'could-not-compare',
         contracts: [file],
         location: `${repoName} (${PIN_FILE})`,
-        note: `pin consumes "${file}", which does not exist in docs/contracts`,
+        note: `pin consumes "${file}", which is missing or unreadable in docs/contracts`,
+        scopes: [`repo:${repoName}`, `contract:${file}`],
       });
       continue;
     }
@@ -110,6 +130,7 @@ export function computeRepoDrift(repoName, pin, pinError, contractsByFile) {
         contracts: [file],
         location: `${repoName} (${PIN_FILE})`,
         note: `pinned commit "${pin.contractsCommit}" not found in document-specs history`,
+        scopes: [`repo:${repoName}`, `contract:${file}`],
       });
       continue;
     }
@@ -120,24 +141,82 @@ export function computeRepoDrift(repoName, pin, pinError, contractsByFile) {
         contracts: [file],
         location: `${repoName} (${PIN_FILE})`,
         note: `${contract.behindCount} commit(s) behind on ${file}`,
+        scopes: [`repo:${repoName}`, `contract:${file}`],
       });
     }
   }
   return findings;
 }
 
+// Pin shape per CONTEXT.md / ADR 0001: a docs-repo commit, the generator
+// version, and the list of contracts consumed. Rejecting a malformed pin
+// here (rather than letting it through as "no findings") is what makes
+// FR-014's "MUST NOT be left out" hold for a pin that fetched fine but is
+// garbage.
+export function validatePin(pin) {
+  if (typeof pin !== 'object' || pin === null || Array.isArray(pin)) {
+    return `${PIN_FILE} is not a JSON object`;
+  }
+  if (typeof pin.contractsCommit !== 'string' || pin.contractsCommit === '') {
+    return `${PIN_FILE} is missing "contractsCommit"`;
+  }
+  if (!Array.isArray(pin.consumes)) {
+    return `${PIN_FILE} is missing "consumes" (expected an array of contract filenames)`;
+  }
+  if (typeof pin.generatorVersion !== 'string' || pin.generatorVersion === '') {
+    return `${PIN_FILE} is missing "generatorVersion"`;
+  }
+  return null;
+}
+
 // FR-007/FR-008/FR-009/FR-011/FR-015: merge newly computed findings into the
-// persisted report, keeping existing status (pending/rejected/ticketed) and
-// firstSeen for keys that still apply, dropping keys that no longer apply.
-export function mergeReport(existingItems, currentFindings, now) {
+// persisted report. For a key seen again this run, keep its status/firstSeen
+// (and any extra fields set by setItemStatus, e.g. ticketUrl) but refresh its
+// kind/contracts/location/note/scopes from the fresh finding. A key from the
+// prior report that is NOT seen this run is normally dropped (it is
+// resolved) -- UNLESS its scope matches `failedScopes`, meaning the thing
+// that would have reproduced it could not be checked this run (a transient
+// fetch/git failure). Carrying it forward unchanged in that case stops a
+// transient failure from silently erasing a rejected or ticketed item
+// (FR-011, FR-015).
+export function mergeReport(existingItems, currentFindings, now, failedScopes = new Set()) {
   const existingByKey = new Map(existingItems.map((item) => [item.key, item]));
+  const seenKeys = new Set();
   const merged = currentFindings.map((finding) => {
+    seenKeys.add(finding.key);
     const existing = existingByKey.get(finding.key);
-    return existing
-      ? { ...finding, status: existing.status, note: existing.note, firstSeen: existing.firstSeen }
-      : { ...finding, status: 'pending', firstSeen: now };
+    if (existing) {
+      return { ...existing, ...finding, status: existing.status, firstSeen: existing.firstSeen };
+    }
+    return { ...finding, status: 'pending', firstSeen: now };
   });
+  for (const item of existingItems) {
+    if (seenKeys.has(item.key)) continue;
+    const scopes = item.scopes ?? [];
+    if (scopes.some((s) => failedScopes.has(s))) merged.push(item);
+  }
   return merged;
+}
+
+// Owner action (FR-010/FR-015): record a decision on one item by key. There
+// is no automatic path to "rejected" or "ticketed" -- this is the only one.
+export function setItemStatus(items, key, status, extra = {}) {
+  let found = false;
+  const updated = items.map((item) => {
+    if (item.key !== key) return item;
+    found = true;
+    return { ...item, ...extra, status };
+  });
+  if (!found) throw new Error(`no report item with key "${key}"`);
+  return updated;
+}
+
+// Order-independent equality used to decide whether anything actually
+// changed, so a no-op run doesn't touch the "Last run" timestamp and trigger
+// a spurious PR (US2 Acceptance Scenario 2: "no new report is opened").
+export function itemsEqual(a, b) {
+  const canon = (items) => JSON.stringify([...items].sort((x, y) => x.key.localeCompare(y.key)));
+  return canon(a) === canon(b);
 }
 
 export function renderReport(items, now) {
@@ -182,7 +261,8 @@ export function renderReport(items, now) {
     lines.push('| Kind | Contract(s) | Location | Status | Note |');
     lines.push('|---|---|---|---|---|');
     for (const item of resolved) {
-      lines.push(`| ${item.kind} | ${item.contracts.join(', ') || '-'} | ${item.location} | ${item.status} | ${item.note} |`);
+      const note = item.ticketUrl ? `${item.note} (ticket: ${item.ticketUrl})` : item.note;
+      lines.push(`| ${item.kind} | ${item.contracts.join(', ') || '-'} | ${item.location} | ${item.status} | ${note} |`);
     }
   }
   lines.push('');
@@ -197,6 +277,11 @@ export function parseReport(markdown) {
   } catch {
     return [];
   }
+}
+
+export function parseLastRun(markdown) {
+  const match = markdown.match(/_Last run: (.+?)_/);
+  return match ? match[1] : null;
 }
 
 function git(args) {
@@ -231,22 +316,54 @@ async function fetchPin(owner, repo) {
   if (!res.ok) {
     return { pin: null, error: `fetching ${PIN_FILE} from ${owner}/${repo} failed: HTTP ${res.status}` };
   }
+  let pin;
   try {
-    return { pin: JSON.parse(await res.text()), error: null };
+    pin = JSON.parse(await res.text());
   } catch {
     return { pin: null, error: `${PIN_FILE} in ${owner}/${repo} is not valid JSON` };
   }
+  const shapeError = validatePin(pin);
+  if (shapeError) return { pin: null, error: `${PIN_FILE} in ${owner}/${repo}: ${shapeError}` };
+  return { pin, error: null };
 }
 
-async function main() {
+function loadReportItems() {
+  return existsSync(REPORT_PATH) ? parseReport(readFileSync(REPORT_PATH, 'utf8')) : [];
+}
+
+function saveReportItems(items, timestamp) {
+  mkdirSync(path.dirname(REPORT_PATH), { recursive: true });
+  writeFileSync(REPORT_PATH, renderReport(items, timestamp));
+}
+
+async function runSetStatus(key, status, ticketUrl) {
+  if (!key || !status) {
+    throw new Error('usage: drift-report.mjs set-status <key> <pending|rejected|ticketed> [ticketUrl]');
+  }
+  const items = loadReportItems();
+  const extra = ticketUrl ? { ticketUrl } : {};
+  const updated = setItemStatus(items, key, status, extra);
+  const previous = existsSync(REPORT_PATH) ? readFileSync(REPORT_PATH, 'utf8') : '';
+  const timestamp = parseLastRun(previous) ?? new Date().toISOString();
+  saveReportItems(updated, timestamp);
+  console.log(`drift-report: set ${key} -> ${status}`);
+}
+
+async function runGenerate() {
   const now = new Date().toISOString();
 
   const files = listContractFiles();
-  const contracts = files.map((file) => {
-    const schema = JSON.parse(readFileSync(path.join(CONTRACTS_DIR, file), 'utf8'));
-    const latestCommit = latestCommitTouching(path.join('docs/contracts', file));
-    return { file, schema, latestCommit };
-  });
+  const contracts = [];
+  const contractReadErrors = {};
+  for (const file of files) {
+    try {
+      const schema = JSON.parse(readFileSync(path.join(CONTRACTS_DIR, file), 'utf8'));
+      const latestCommit = latestCommitTouching(path.join('docs/contracts', file));
+      contracts.push({ file, schema, latestCommit });
+    } catch (err) {
+      contractReadErrors[file] = err.message;
+    }
+  }
   const contractsByFile = {};
   for (const c of contracts) {
     contractsByFile[c.file] = {
@@ -258,6 +375,19 @@ async function main() {
   }
 
   const findings = [];
+  const failedScopes = new Set();
+
+  for (const [file, message] of Object.entries(contractReadErrors)) {
+    findings.push({
+      key: `could-not-compare:contract:${file}`,
+      kind: 'could-not-compare',
+      contracts: [file],
+      location: `docs/contracts/${file}`,
+      note: `could not read contract: ${message}`,
+      scopes: [`contract:${file}`],
+    });
+    failedScopes.add(`contract:${file}`);
+  }
 
   if (contracts.length >= 2) {
     findings.push(...computeSpecConflicts(contracts));
@@ -265,8 +395,9 @@ async function main() {
 
   for (const { name, owner, repo } of CODE_REPOS) {
     const { pin, error } = await fetchPin(owner, repo);
+    if (error) failedScopes.add(`repo:${name}`);
     if (!error && pin) {
-      for (const file of pin.consumes ?? []) {
+      for (const file of pin.consumes) {
         const contract = contractsByFile[file];
         if (contract) contract.behindCount = commitsBehind(pin.contractsCommit, path.join('docs/contracts', file));
       }
@@ -274,13 +405,23 @@ async function main() {
     findings.push(...computeRepoDrift(name, pin, error, contractsByFile));
   }
 
-  const existing = existsSync(REPORT_PATH) ? parseReport(readFileSync(REPORT_PATH, 'utf8')) : [];
-  const merged = mergeReport(existing, findings, now);
-  const report = renderReport(merged, now);
+  const existing = loadReportItems();
+  const merged = mergeReport(existing, findings, now, failedScopes);
 
-  mkdirSync(path.dirname(REPORT_PATH), { recursive: true });
-  writeFileSync(REPORT_PATH, report);
+  const previousLastRun = existsSync(REPORT_PATH) ? parseLastRun(readFileSync(REPORT_PATH, 'utf8')) : null;
+  const timestamp = previousLastRun && itemsEqual(merged, existing) ? previousLastRun : now;
+
+  saveReportItems(merged, timestamp);
   console.log(`drift-report: wrote ${REPORT_PATH} (${merged.filter((i) => i.status === 'pending').length} pending)`);
+}
+
+async function main() {
+  const [cmd, ...rest] = process.argv.slice(2);
+  if (cmd === 'set-status') {
+    await runSetStatus(...rest);
+    return;
+  }
+  await runGenerate();
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? '').href) {

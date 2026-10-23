@@ -9,8 +9,11 @@
       "contracts": [],
       "location": "backend (contract.lock)",
       "note": "no contract.lock found in super-good-sg/backend",
+      "scopes": [
+        "repo:backend"
+      ],
       "status": "pending",
-      "firstSeen": "2026-10-23T14:47:11.019Z"
+      "firstSeen": "2026-10-23T15:34:58.634Z"
     },
     {
       "key": "could-not-compare:frontend-web",
@@ -18,14 +21,17 @@
       "contracts": [],
       "location": "frontend-web (contract.lock)",
       "note": "no contract.lock found in super-good-sg/frontend-web",
+      "scopes": [
+        "repo:frontend-web"
+      ],
       "status": "pending",
-      "firstSeen": "2026-10-23T14:47:11.019Z"
+      "firstSeen": "2026-10-23T15:34:58.634Z"
     }
   ]
 }
 -->
 
-_Last run: 2026-10-23T14:47:25.378Z_
+_Last run: 2026-10-23T15:34:58.634Z_
 
 ## Pending (2 of 2)
 
