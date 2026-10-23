@@ -1,0 +1,51 @@
+name: Weekly drift report
+
+# SIE-93 (spec.md user stories 2 and 3): once a week, compare each code repo's
+# pin against the latest contracts and the contracts against each other, and
+# open or update a PR with docs/reports/drift-report.md for the owner to read.
+# Never creates tickets (FR-010) and holds no ticket-tracker credential (FR-013) -
+# only the default GITHUB_TOKEN, scoped to this repo.
+on:
+  schedule:
+    - cron: '0 8 * * 1' # Monday 08:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drift-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - name: Generate report
+        run: npm run drift-report
+      - name: Open or update PR with the report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- docs/reports/drift-report.md; then
+            echo "No change to the drift report."
+            exit 0
+          fi
+          branch="reports/drift-report-$(date -u +%Y-%m-%d)"
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git checkout -b "$branch"
+          git add docs/reports/drift-report.md
+          git commit -m "docs(SIE-93): weekly drift report $(date -u +%Y-%m-%d)"
+          git push origin "$branch"
+          if gh pr list --head "$branch" --state open --json number --jq 'length' | grep -qx 0; then
+            gh pr create --title "docs(SIE-93): weekly drift report $(date -u +%Y-%m-%d)" \
+              --body "Automated weekly drift report (SIE-93). Review the pending items in docs/reports/drift-report.md and ask for tickets on whichever you want to act on." \
+              --base main --head "$branch"
+          fi

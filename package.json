@@ -8,7 +8,8 @@
   },
   "scripts": {
     "prepare": "husky",
-    "test": "node --test commitlint/*.test.js"
+    "test": "node --test commitlint/*.test.js scripts/*.test.mjs",
+    "drift-report": "node scripts/drift-report.mjs"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^21.2.3",
