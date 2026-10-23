@@ -1,0 +1,77 @@
+name: Weekly drift report
+
+# SIE-93 (spec.md user stories 2 and 3): once a week, compare each code repo's
+# pin against the latest contracts and the contracts against each other, and
+# open or update a PR with docs/reports/drift-report.md for the owner to read.
+# Never creates tickets (FR-010) and holds no ticket-tracker credential (FR-013) -
+# only the default GITHUB_TOKEN, scoped to this repo.
+on:
+  schedule:
+    - cron: '0 8 * * 1' # Monday 08:00 UTC
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  drift-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - name: Load the open report PR's state, if any, as the merge baseline
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          branch="reports/drift-report"
+          baseline="$RUNNER_TEMP/baseline-drift-report.md"
+          : > "$baseline"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then
+            git fetch origin "$branch"
+            git show "origin/$branch:docs/reports/drift-report.md" > "$baseline" 2>/dev/null || true
+          elif [ -f docs/reports/drift-report.md ]; then
+            cp docs/reports/drift-report.md "$baseline"
+          fi
+          if [ -s "$baseline" ]; then
+            cp "$baseline" docs/reports/drift-report.md
+          else
+            rm -f docs/reports/drift-report.md
+          fi
+          echo "BASELINE_REPORT=$baseline" >> "$GITHUB_ENV"
+      - name: Generate report
+        run: npm run drift-report
+      - name: Open or update the single report PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          branch="reports/drift-report"
+          if [ -s "$BASELINE_REPORT" ] && cmp -s "$BASELINE_REPORT" docs/reports/drift-report.md; then
+            echo "No change to the drift report."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          # Rebuild the branch fresh off current main every run. Its prior
+          # content was already folded in as the merge baseline above, so the
+          # only thing lost by force-pushing is commit history, not state -
+          # this avoids the non-fast-forward failures of trying to update a
+          # branch whose last push came from a different main commit.
+          git checkout -B "$branch"
+          git add docs/reports/drift-report.md
+          git commit -m "docs(SIE-93): weekly drift report $(date -u +%Y-%m-%d)"
+          git push --force-with-lease origin "$branch"
+          open_count=$(gh pr list --head "$branch" --state open --json number --jq 'length')
+          if [ "$open_count" -eq 0 ]; then
+            gh pr create --title "docs(SIE-93): weekly drift report" \
+              --body "Automated weekly drift report (SIE-93). Review the pending items in docs/reports/drift-report.md. To act on one, run locally: npm run drift-report -- set-status <key> <rejected|ticketed> [ticketUrl], then push to this branch before merging." \
+              --base main --head "$branch"
+          fi

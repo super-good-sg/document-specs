@@ -10,6 +10,7 @@ pattern file every session.
 | angular-state-signals-and-services.md | Angular (frontend-web): shared/local state via signals + injectable services, no NgRx/Akita unless it stops scaling |
 | ef-core-migrations-per-service.md | Backend: migrations use EF Core, owned by each service, applied via a migration role separate from the service's runtime role |
 | iorderextractor-gemini-first-adapter.md | Backend: extraction goes through the `IOrderExtractor` port (`ExtractFromAudio`/`ExtractFromImage`), Gemini first, provider chosen by DI config |
+| weekly-report-markdown-state.md | document-specs: scheduled report keeps state in a hidden JSON block inside its own Markdown file, delivered via one fixed-name branch/PR reused every run |
 
 <!--
 When adding a pattern, append one row here:

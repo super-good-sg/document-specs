@@ -132,6 +132,5 @@ Linear moves status from PR events (SIE-85): PR ready for review → In Review (
 
 ## Open items (owned by other tickets)
 - Running the review in CI (no ticket yet; SIE-92 was canceled).
-- Weekly code/spec sync: what is compared against what, how the comparison is done, and who the owner is (SIE-93).
 - Whether a Codex error should also be reported somewhere (log, Linear comment), and whether Codex-only mode is ever wanted.
 - Whether sandboxing (Docker Sandboxes) or Docker Agent is added later: deferred (see the 2026-10-12 Docker Agent discussion note).
