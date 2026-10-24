@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://super-good.dev/schemas/catalog-item-schema.v1.json",
+  "title": "CatalogItem",
+  "description": "Canonical catalog item entity v1 (SIE-25). Full catalog-service record for a product: current price, on-hand stock, and identity. The product schema (SIE-24) is a narrower, extraction-only shape (name/unit/price) produced by voice/image-to-product; a successful extraction job creates or updates one of these.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "format": "uuid" },
+    "name": { "type": "string", "minLength": 1 },
+    "unit": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Free-form unit of measure, same convention as the order schema's item.unit."
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Current unit price in VND. Changing it appends an entry to this item's price history."
+    },
+    "stockOnHand": {
+      "type": "number",
+      "description": "On-hand count (ADR 0005). Read-only via the API: it only changes through the order-confirmed event (a confirmed purchase order adds, a confirmed sales order subtracts), never a direct write."
+    },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  },
+  "required": ["schemaVersion", "id", "name", "unit", "price", "stockOnHand", "createdAt", "updatedAt"],
+  "additionalProperties": false
+}

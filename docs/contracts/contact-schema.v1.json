@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://super-good.dev/schemas/contact-schema.v1.json",
+  "title": "Contact",
+  "description": "Canonical contact entity v1 (SIE-25). A customer or a supplier; the type decides which order direction it can be used with. The order schema (SIE-24) embeds a point-in-time snapshot of a contact's name/phone/address, not a live reference, so later edits here never retroactively change a historical order.",
+  "type": "object",
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "format": "uuid" },
+    "type": {
+      "type": "string",
+      "enum": ["customer", "supplier"],
+      "description": "customer: used as the contact on a sale order. supplier: used as the contact on a purchase order."
+    },
+    "name": { "type": "string", "minLength": 1 },
+    "phone": { "type": "string" },
+    "address": { "type": "string" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" }
+  },
+  "required": ["schemaVersion", "id", "type", "name", "createdAt", "updatedAt"],
+  "additionalProperties": false
+}

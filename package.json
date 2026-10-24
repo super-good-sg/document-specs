@@ -9,10 +9,12 @@
   "scripts": {
     "prepare": "husky",
     "test": "node --test commitlint/*.test.js scripts/*.test.mjs",
-    "drift-report": "node scripts/drift-report.mjs"
+    "drift-report": "node scripts/drift-report.mjs",
+    "lint:openapi": "redocly lint docs/contracts/openapi.v1.yaml"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^21.2.3",
+    "@redocly/cli": "^2.71.0",
     "commitlint": "^21.2.3",
     "husky": "^9.1.7"
   }
