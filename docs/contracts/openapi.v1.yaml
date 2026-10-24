@@ -1,0 +1,575 @@
+openapi: 3.1.0
+info:
+  title: Super Good API
+  version: "1.0.0"
+  description: >
+    SIE-25 (2.2): v1 contract for orders, contacts, catalog, media upload and
+    jobs. See docs/business-doc.md for product context. Out of scope for this
+    version: receipts (SIE-46), VAT invoicing (SIE-96), and deep job retry /
+    dead-letter semantics (SIE-27 extends the Job shape here).
+
+    Every resource is scoped to the authenticated user: "Nothing is shared
+    between users" (business-doc.md). The server derives the owning user from
+    the bearer token's `sub` claim; no request ever names another user's id.
+servers:
+  - url: https://api.example.invalid
+    description: Placeholder. The real gateway domain is decided in SIE-38 (domain, DNS and TLS per environment).
+security:
+  - bearerAuth: []
+tags:
+  - name: Contacts
+    description: Owned by the catalog+contacts service.
+  - name: Catalog
+    description: Owned by the catalog+contacts service.
+  - name: Orders
+    description: Owned by the orders service.
+  - name: Media
+    description: Owned by the jobs/AI service. Upload audio or image to start an extraction job.
+  - name: Jobs
+    description: Owned by the jobs/AI service. Poll for extraction job status and result.
+
+paths:
+  /contacts:
+    get:
+      tags: [Contacts]
+      summary: List contacts
+      operationId: listContacts
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: A page of contacts.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/ContactList' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+    post:
+      tags: [Contacts]
+      summary: Create a contact
+      operationId: createContact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ContactCreate' }
+      responses:
+        '201':
+          description: The created contact.
+          content:
+            application/json:
+              schema: { $ref: './contact-schema.v1.json' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /contacts/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags: [Contacts]
+      summary: Get a contact
+      operationId: getContact
+      responses:
+        '200':
+          description: The contact.
+          content:
+            application/json:
+              schema: { $ref: './contact-schema.v1.json' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Contacts]
+      summary: Update a contact
+      operationId: updateContact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ContactUpdate' }
+      responses:
+        '200':
+          description: The updated contact.
+          content:
+            application/json:
+              schema: { $ref: './contact-schema.v1.json' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [Contacts]
+      summary: Delete a contact
+      operationId: deleteContact
+      description: >
+        Does not retroactively change any order that already snapshotted this
+        contact's name/phone/address (order-schema.v1.json's embedded contact
+        is a copy, not a live reference).
+      responses:
+        '204': { description: Deleted. }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /catalog-items:
+    get:
+      tags: [Catalog]
+      summary: List catalog items
+      operationId: listCatalogItems
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: A page of catalog items.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CatalogItemList' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+    post:
+      tags: [Catalog]
+      summary: Create a catalog item
+      operationId: createCatalogItem
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CatalogItemCreate' }
+      responses:
+        '201':
+          description: The created catalog item. stockOnHand starts at 0.
+          content:
+            application/json:
+              schema: { $ref: './catalog-item-schema.v1.json' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /catalog-items/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags: [Catalog]
+      summary: Get a catalog item
+      operationId: getCatalogItem
+      responses:
+        '200':
+          description: The catalog item.
+          content:
+            application/json:
+              schema: { $ref: './catalog-item-schema.v1.json' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Catalog]
+      summary: Update a catalog item
+      operationId: updateCatalogItem
+      description: Changing `price` appends an entry to the item's price history.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CatalogItemUpdate' }
+      responses:
+        '200':
+          description: The updated catalog item.
+          content:
+            application/json:
+              schema: { $ref: './catalog-item-schema.v1.json' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [Catalog]
+      summary: Delete a catalog item
+      operationId: deleteCatalogItem
+      responses:
+        '204': { description: Deleted. }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /catalog-items/{id}/price-history:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags: [Catalog]
+      summary: List price history for a catalog item, oldest first
+      operationId: listCatalogItemPriceHistory
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+      responses:
+        '200':
+          description: A page of price history entries.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/PriceHistoryList' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /orders:
+    get:
+      tags: [Orders]
+      summary: List orders
+      operationId: listOrders
+      parameters:
+        - $ref: '#/components/parameters/page'
+        - $ref: '#/components/parameters/pageSize'
+        - name: status
+          in: query
+          schema: { type: string, enum: [pending, confirmed] }
+        - name: direction
+          in: query
+          schema: { type: string, enum: [sale, purchase] }
+      responses:
+        '200':
+          description: A page of orders.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/OrderList' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+    post:
+      tags: [Orders]
+      summary: Create an order (manual entry)
+      operationId: createOrder
+      description: >
+        Voice and image capture create orders through a Job
+        (POST /media then GET /jobs/{id}), not this endpoint. This is the
+        manual-entry path (business-doc.md's "fallback when extraction
+        fails"). The created order always starts `pending`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/OrderCreate' }
+      responses:
+        '201':
+          description: The created, pending order.
+          content:
+            application/json:
+              schema: { $ref: './order-schema.v1.json' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /orders/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags: [Orders]
+      summary: Get an order
+      operationId: getOrder
+      responses:
+        '200':
+          description: The order.
+          content:
+            application/json:
+              schema: { $ref: './order-schema.v1.json' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    patch:
+      tags: [Orders]
+      summary: Edit a pending order
+      operationId: updateOrder
+      description: Fails with 409 once the order is `confirmed` (no edits in v1 past that point).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/OrderUpdate' }
+      responses:
+        '200':
+          description: The updated order.
+          content:
+            application/json:
+              schema: { $ref: './order-schema.v1.json' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+
+  /orders/{id}/confirm:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    post:
+      tags: [Orders]
+      summary: Confirm a pending order
+      operationId: confirmOrder
+      description: >
+        Moves status from `pending` to `confirmed`, sets `confirmedAt`, and
+        fires the order-confirmed event that Catalog listens to for stock
+        (docs/architecture/). Fails with 409 if already confirmed.
+      responses:
+        '200':
+          description: The confirmed order.
+          content:
+            application/json:
+              schema: { $ref: './order-schema.v1.json' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+
+  /media:
+    post:
+      tags: [Media]
+      summary: Upload audio or an image to start one or more extraction jobs
+      operationId: uploadMedia
+      description: >
+        A scan can hold several documents (business-doc.md): the response is
+        always an array, one Job per document detected in the upload (a
+        single-document scan, or any voice recording, returns an array of
+        exactly one). Each Job is tracked and polled independently via
+        GET /jobs/{id}; there is no single combined job for a multi-document
+        upload.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  contentEncoding: binary
+                  description: Audio (voice order) or image (scanned document/receipt/product photo).
+                type:
+                  type: string
+                  enum: [order-extraction, product-extraction]
+              required: [file, type]
+      responses:
+        '202':
+          description: Upload accepted; extraction runs in the background, one Job per detected document.
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 1
+                items: { $ref: '#/components/schemas/Job' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /jobs/{id}:
+    parameters:
+      - $ref: '#/components/parameters/id'
+    get:
+      tags: [Jobs]
+      summary: Get job status and result
+      operationId: getJob
+      description: >
+        `result` is present only when `status` is `succeeded`, and matches
+        order-schema.v1.json or product-schema.v1.json depending on `type`.
+        `error` is present only when `status` is `failed`. SIE-27 extends this
+        shape with retry/dead-letter detail; this is the v1 baseline.
+      responses:
+        '200':
+          description: The job.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Job' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >
+        A Keycloak-issued JWT (ADR 0003). The gateway validates it; services
+        read the `sub` claim as the owning user id and scope every query to
+        it. No role/team claim is required in v1 (business-doc.md: "Nothing
+        is shared between users", no multi-user teams).
+
+  parameters:
+    id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    page:
+      name: page
+      in: query
+      schema: { type: integer, minimum: 1, default: 1 }
+    pageSize:
+      name: pageSize
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+
+  responses:
+    BadRequest:
+      description: The request body failed validation.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    NotFound:
+      description: No resource with that id, or it belongs to a different user.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+    Conflict:
+      description: The resource's current state does not allow this action.
+      content:
+        application/problem+json:
+          schema: { $ref: '#/components/schemas/Problem' }
+
+  schemas:
+    Problem:
+      description: RFC 9457 problem details. ASP.NET Core produces this shape natively.
+      type: object
+      properties:
+        type: { type: string, format: uri }
+        title: { type: string }
+        status: { type: integer }
+        detail: { type: string }
+        instance: { type: string, format: uri }
+      required: [title, status]
+      additionalProperties: true
+
+    ContactCreate:
+      type: object
+      properties:
+        type: { type: string, enum: [customer, supplier] }
+        name: { type: string, minLength: 1 }
+        phone: { type: string }
+        address: { type: string }
+      required: [type, name]
+      additionalProperties: false
+
+    ContactUpdate:
+      type: object
+      properties:
+        type: { type: string, enum: [customer, supplier] }
+        name: { type: string, minLength: 1 }
+        phone: { type: string }
+        address: { type: string }
+      additionalProperties: false
+
+    ContactList:
+      type: object
+      properties:
+        items: { type: array, items: { $ref: './contact-schema.v1.json' } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
+      required: [items, total, page, pageSize]
+      additionalProperties: false
+
+    CatalogItemCreate:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        unit: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+      required: [name, unit, price]
+      additionalProperties: false
+
+    CatalogItemUpdate:
+      type: object
+      properties:
+        name: { type: string, minLength: 1 }
+        unit: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+      additionalProperties: false
+
+    CatalogItemList:
+      type: object
+      properties:
+        items: { type: array, items: { $ref: './catalog-item-schema.v1.json' } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
+      required: [items, total, page, pageSize]
+      additionalProperties: false
+
+    PriceHistoryEntry:
+      type: object
+      properties:
+        price: { type: number, minimum: 0 }
+        changedAt: { type: string, format: date-time }
+      required: [price, changedAt]
+      additionalProperties: false
+
+    PriceHistoryList:
+      type: object
+      properties:
+        items: { type: array, items: { $ref: '#/components/schemas/PriceHistoryEntry' } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
+      required: [items, total, page, pageSize]
+      additionalProperties: false
+
+    OrderCreateItem:
+      type: object
+      properties:
+        catalogItemId: { type: [string, 'null'], format: uuid }
+        name: { type: string, minLength: 1 }
+        qty: { type: number, exclusiveMinimum: 0 }
+        unit: { type: string, minLength: 1 }
+        price: { type: number, minimum: 0 }
+        taxRate: { type: number, minimum: 0 }
+        taxAmount:
+          type: number
+          minimum: 0
+          description: >
+            As confirmed by the reviewer -- order-schema.v1.json's item does
+            not re-derive this from taxRate at read time, so it must be
+            supplied here (editable during review even when taxRate is
+            correct).
+      required: [name, qty, unit, price, taxRate, taxAmount]
+      additionalProperties: false
+
+    OrderCreate:
+      type: object
+      description: >
+        No `direction` field: order-schema.v1.json defines direction as "set
+        from the contact at order creation" (business-doc.md: "the contact
+        decides the direction"), so the server derives it from contactId's
+        Contact.type (customer -> sale, supplier -> purchase) rather than
+        accepting it as independent client input.
+      properties:
+        contactId:
+          type: string
+          format: uuid
+          description: Must be a contact owned by the authenticated user; otherwise the request fails with 400.
+        items: { type: array, minItems: 1, items: { $ref: '#/components/schemas/OrderCreateItem' } }
+        sourceLanguage: { type: string, enum: [vi, en, mixed] }
+      required: [contactId, items, sourceLanguage]
+      additionalProperties: false
+
+    OrderUpdate:
+      type: object
+      properties:
+        contactId:
+          type: string
+          format: uuid
+          description: >
+            Must be a contact owned by the authenticated user, and its
+            Contact.type must match the order's existing (immutable)
+            direction -- e.g. a sale order's contact can only be reassigned
+            to another customer, never to a supplier. Otherwise 400.
+        items: { type: array, minItems: 1, items: { $ref: '#/components/schemas/OrderCreateItem' } }
+      additionalProperties: false
+
+    OrderList:
+      type: object
+      properties:
+        items: { type: array, items: { $ref: './order-schema.v1.json' } }
+        total: { type: integer, minimum: 0 }
+        page: { type: integer, minimum: 1 }
+        pageSize: { type: integer, minimum: 1 }
+      required: [items, total, page, pageSize]
+      additionalProperties: false
+
+    Job:
+      type: object
+      description: >
+        allOf below enforces two rules a bare oneOf cannot: result's shape
+        must match `type` (not just structurally validate against either
+        branch), and result/error are required exactly when status says so.
+      properties:
+        id: { type: string, format: uuid }
+        type: { type: string, enum: [order-extraction, product-extraction] }
+        status: { type: string, enum: [pending, processing, succeeded, failed] }
+        result:
+          description: Present only when status is succeeded; shape matches `type` (see allOf).
+          oneOf:
+            - { $ref: './order-schema.v1.json' }
+            - { $ref: './product-schema.v1.json' }
+        error:
+          description: Present only when status is failed.
+          $ref: '#/components/schemas/Problem'
+        createdAt: { type: string, format: date-time }
+        updatedAt: { type: string, format: date-time }
+      required: [id, type, status, createdAt, updatedAt]
+      additionalProperties: false
+      allOf:
+        - if: { properties: { type: { const: order-extraction } } }
+          then: { properties: { result: { $ref: './order-schema.v1.json' } } }
+        - if: { properties: { type: { const: product-extraction } } }
+          then: { properties: { result: { $ref: './product-schema.v1.json' } } }
+        - if: { properties: { status: { const: succeeded } } }
+          then: { required: [result] }
+        - if: { properties: { status: { const: failed } } }
+          then: { required: [error] }
