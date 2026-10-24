@@ -104,10 +104,14 @@ Decided in SIE-87. A PR passes when Sieu approves it, after the agents have revi
 - Match found: apply it, no need to ask again.
 - Nothing matches: stop and ask. After approval, add a pattern file and an `index.md` row.
 
+## Visual check
+A frontend-web screen is not done until it is checked against its design frame in `super-good.pen` (`docs/design/screens.md`, `docs/design/tokens.md`). The mechanism is an automated pixel-diff (Playwright screenshot vs. an exported reference image), built in SIE-100 and documented there as a pattern once it ships. Code-to-design is one-way: the design file is the reference, not something code pushes updates back into.
+
 ## Definition of done
 - [ ] All acceptance criteria met and checked.
 - [ ] Build, tests and lint pass locally and in CI.
 - [ ] New logic has at least one test that fails if it breaks.
+- [ ] A new or changed frontend-web screen is visually diffed against its `super-good.pen` reference (SIE-100) and passes within tolerance; `N/A` if the ticket has no visual change.
 - [ ] Docs updated where behavior changed (README, ADR, contract), with no unrelated edits.
 - [ ] No secrets, no debug leftovers, no new dependency without approval.
 - [ ] PR links the Linear issue and the contract or doc section; the review pass found no open issues.
