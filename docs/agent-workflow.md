@@ -105,7 +105,9 @@ Decided in SIE-87. A PR passes when Sieu approves it, after the agents have revi
 - Nothing matches: stop and ask. After approval, add a pattern file and an `index.md` row.
 
 ## Visual check
-A frontend-web screen is not done until it is checked against its design frame in `super-good.pen` (`docs/design/screens.md`, `docs/design/tokens.md`). The mechanism is an automated pixel-diff (Playwright screenshot vs. an exported reference image), built in SIE-100 and documented there as a pattern once it ships. Code-to-design is one-way: the design file is the reference, not something code pushes updates back into.
+A frontend-web screen is not done until it is checked against its design frame in `super-good.pen` (`docs/design/screens.md`, `docs/design/tokens.md`). The mechanism is an automated pixel-diff (Playwright screenshot vs. an exported reference image), owned by SIE-100 and documented there as a pattern once it ships. Code-to-design is one-way: the design file is the reference, not something code pushes updates back into.
+
+Until SIE-100 ships, no such check exists: treat the Definition-of-done line below as `N/A` for any ticket worked before then.
 
 ## Definition of done
 - [ ] All acceptance criteria met and checked.
