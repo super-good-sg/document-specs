@@ -16,7 +16,7 @@
     "price": {
       "type": "number",
       "minimum": 0,
-      "description": "Current unit price in VND. Changing it appends an entry to this item's price history."
+      "description": "Current unit price in VND. v1 only ever populates whole VND (no subunit), same convention as order-schema.v1.json's money fields. Changing it appends an entry to this item's price history."
     },
     "stockOnHand": {
       "type": "number",

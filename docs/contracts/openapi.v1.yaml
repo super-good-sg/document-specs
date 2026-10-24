@@ -294,8 +294,15 @@ paths:
   /media:
     post:
       tags: [Media]
-      summary: Upload audio or an image to start an extraction job
+      summary: Upload audio or an image to start one or more extraction jobs
       operationId: uploadMedia
+      description: >
+        A scan can hold several documents (business-doc.md): the response is
+        always an array, one Job per document detected in the upload (a
+        single-document scan, or any voice recording, returns an array of
+        exactly one). Each Job is tracked and polled independently via
+        GET /jobs/{id}; there is no single combined job for a multi-document
+        upload.
       requestBody:
         required: true
         content:
@@ -313,10 +320,13 @@ paths:
               required: [file, type]
       responses:
         '202':
-          description: Upload accepted; extraction runs in the background.
+          description: Upload accepted; extraction runs in the background, one Job per detected document.
           content:
             application/json:
-              schema: { $ref: '#/components/schemas/Job' }
+              schema:
+                type: array
+                minItems: 1
+                items: { $ref: '#/components/schemas/Job' }
         '400': { $ref: '#/components/responses/BadRequest' }
 
   /jobs/{id}:
@@ -479,23 +489,46 @@ components:
         unit: { type: string, minLength: 1 }
         price: { type: number, minimum: 0 }
         taxRate: { type: number, minimum: 0 }
-      required: [name, qty, unit, price, taxRate]
+        taxAmount:
+          type: number
+          minimum: 0
+          description: >
+            As confirmed by the reviewer -- order-schema.v1.json's item does
+            not re-derive this from taxRate at read time, so it must be
+            supplied here (editable during review even when taxRate is
+            correct).
+      required: [name, qty, unit, price, taxRate, taxAmount]
       additionalProperties: false
 
     OrderCreate:
       type: object
+      description: >
+        No `direction` field: order-schema.v1.json defines direction as "set
+        from the contact at order creation" (business-doc.md: "the contact
+        decides the direction"), so the server derives it from contactId's
+        Contact.type (customer -> sale, supplier -> purchase) rather than
+        accepting it as independent client input.
       properties:
-        direction: { type: string, enum: [sale, purchase] }
-        contactId: { type: string, format: uuid }
+        contactId:
+          type: string
+          format: uuid
+          description: Must be a contact owned by the authenticated user; otherwise the request fails with 400.
         items: { type: array, minItems: 1, items: { $ref: '#/components/schemas/OrderCreateItem' } }
         sourceLanguage: { type: string, enum: [vi, en, mixed] }
-      required: [direction, contactId, items, sourceLanguage]
+      required: [contactId, items, sourceLanguage]
       additionalProperties: false
 
     OrderUpdate:
       type: object
       properties:
-        contactId: { type: string, format: uuid }
+        contactId:
+          type: string
+          format: uuid
+          description: >
+            Must be a contact owned by the authenticated user, and its
+            Contact.type must match the order's existing (immutable)
+            direction -- e.g. a sale order's contact can only be reassigned
+            to another customer, never to a supplier. Otherwise 400.
         items: { type: array, minItems: 1, items: { $ref: '#/components/schemas/OrderCreateItem' } }
       additionalProperties: false
 
@@ -511,12 +544,16 @@ components:
 
     Job:
       type: object
+      description: >
+        allOf below enforces two rules a bare oneOf cannot: result's shape
+        must match `type` (not just structurally validate against either
+        branch), and result/error are required exactly when status says so.
       properties:
         id: { type: string, format: uuid }
         type: { type: string, enum: [order-extraction, product-extraction] }
         status: { type: string, enum: [pending, processing, succeeded, failed] }
         result:
-          description: Present only when status is succeeded.
+          description: Present only when status is succeeded; shape matches `type` (see allOf).
           oneOf:
             - { $ref: './order-schema.v1.json' }
             - { $ref: './product-schema.v1.json' }
@@ -527,3 +564,12 @@ components:
         updatedAt: { type: string, format: date-time }
       required: [id, type, status, createdAt, updatedAt]
       additionalProperties: false
+      allOf:
+        - if: { properties: { type: { const: order-extraction } } }
+          then: { properties: { result: { $ref: './order-schema.v1.json' } } }
+        - if: { properties: { type: { const: product-extraction } } }
+          then: { properties: { result: { $ref: './product-schema.v1.json' } } }
+        - if: { properties: { status: { const: succeeded } } }
+          then: { required: [result] }
+        - if: { properties: { status: { const: failed } } }
+          then: { required: [error] }
