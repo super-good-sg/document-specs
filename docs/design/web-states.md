@@ -9,7 +9,7 @@ frames: frontend-web implements against it directly, referencing existing
 [tokens](tokens.md) and [components](components.md) rather than new ones.
 
 Everything below is a proposal (source: proposed) until reverified by the
-owner — see [reverify.md](reverify.md).
+owner — see [reverify.md](../reverify.md).
 
 ## 1. Mic permission prompt and denial
 
@@ -28,16 +28,20 @@ existing dialog button and status-color tokens.
 
 ## 2. Camera / file picker
 
-Also browser-native (`<input type="file" accept="image/*" capture>` or
-`getUserMedia` for a live camera view) — the picker UI itself isn't
-designed here. The existing scan-order screens (`iPhone 16 - 7`, `ujIUo`
-onward, flows.md §4) already assume a captured image exists; nothing new
-needed for the happy path.
+Only partly browser-native. The live camera view itself already has a
+custom-drawn frame — `iPhone 16 - 7` (`ujIUo`, "camera frame, no document
+yet", flows.md §Scan) plus the `Camera Round Button`, `Camera Controls` and
+`Camera Controls Review` components (screens.md) — so capturing via the
+device's camera is already fully designed; `getUserMedia` just feeds the
+live video into that existing frame. What's genuinely browser-native and
+undesigned is the **alternative** input path: a plain `<input
+type="file">` picker (e.g. "choose from gallery" instead of the live
+camera), whose dialog is OS chrome this app never renders.
 
-Proposed: a picker cancellation (user closes the dialog without choosing a
-file) returns silently to the screen that triggered it — no error state,
-since nothing failed. This matches how a native app's camera/file UI
-typically behaves and needs no new screen.
+Proposed: a file-picker cancellation (user closes the OS dialog without
+choosing a file) returns silently to the screen that triggered it — no
+error state, since nothing failed. This matches how the existing camera
+flow's own cancel path presumably behaves and needs no new screen.
 
 ## 3. Install prompt (PWA)
 
@@ -55,28 +59,30 @@ verify: this is a product call, not just a visual one.
 
 ## 4. Offline state
 
-No connectivity banner exists anywhere in the current screen set. Proposed:
-a thin banner pinned to the top of the screen, below the status bar,
-reading "You're offline — changes will sync when you're back online" (or
-similar), using `--color-warning-foreground` text on `--color-warning`
-background, dismissible only by connectivity returning (not by the user).
-No existing component matches this shape (closest is `Confirm Dialog`,
-`krp83`, which is a modal, not a banner) — this would be a **new**
-component if built, which is new-pattern territory per
-[agent-workflow.md](agent-workflow.md#patterns): stop and ask before the
-frontend-web ticket that builds it adds anything beyond this proposal.
+No connectivity banner exists anywhere in the current screen set. The
+business doc is explicit that **offline order capture is out of scope**
+("Only the app shell works offline") — so the banner should not promise
+anything syncs or saves while offline; it should say capture is
+unavailable until the connection returns. Proposed: a thin banner pinned
+to the top of the screen, below the status bar, reading "You're offline —
+reconnect to record, scan, or create an order" (or similar), using
+`--color-warning-foreground` text on `--color-warning` background,
+dismissible only by connectivity returning (not by the user). No existing
+component matches this shape (closest is `Confirm Dialog`, `krp83`, which
+is a modal, not a banner) — this would be a **new** component if built,
+which is new-pattern territory per
+[agent-workflow.md](../agent-workflow.md#patterns): stop and ask before
+the frontend-web ticket that builds it adds anything beyond this proposal.
 
-Open question for the owner: does "offline" block new order
-creation entirely, or allow local capture (voice/scan) that queues until
-back online? The business doc's [out-of-scope list](business-doc.md) names
-"offline capture" as out of scope for launch, which suggests the former
-(block), but that's an inference, not a stated decision — flagged to
-verify.
+Flagged to verify regardless: "only the app shell works offline" reads as
+"block capture entirely," but whether read-only screens (order list,
+contacts, catalog) stay browsable offline, or the whole app shows this
+banner full-screen, isn't stated — that's an inference, not confirmed.
 
 ## 5. Vietnamese / English language switch
 
 No screen or component for a language toggle exists in the current file.
-The business doc's [launch scope](business-doc.md) names Vietnamese and
+The business doc's [launch scope](../business-doc.md) names Vietnamese and
 English as the two supported UI languages but doesn't show where a user
 switches between them. Proposed: a toggle in whatever settings/profile
 screen gets designed (none exists yet in the current 58-screen set) — out
