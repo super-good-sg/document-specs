@@ -15,15 +15,20 @@ Add an entry to `e2e/visual-refs.config.ts` (`frameId`, `name`, `route`,
 `viewport`). `e2e/visual-regression.spec.ts` iterates that registry: for
 each screen it fetches `docs/design/visual-refs/<frameId>.png` from the
 public `document-specs` repo on GitHub (raw URL, no credential needed — the
-repo is public), writes it to Playwright's own snapshot path, then uses
-`expect(page).toHaveScreenshot(name)` to diff the live render against it.
-No pixelmatch/looks-same dependency: `@playwright/test` already bundles
-pixel-diffing. Tolerance is set once, in `playwright.config.ts`'s
-`expect.toHaveScreenshot.maxDiffPixelRatio` (currently `0.02`).
+repo is public), writes it to Playwright's own snapshot path under the name
+`<frameId>.png`, then uses `expect(page).toHaveScreenshot('<frameId>.png')`
+to diff the live render against it. No pixelmatch/looks-same dependency:
+`@playwright/test` already bundles pixel-diffing. Tolerance is set once, in
+`playwright.config.ts`'s `expect.toHaveScreenshot.maxDiffPixelRatio`
+(currently `0.02`).
 
-A screen with no reference image yet (fetch returns non-OK) is skipped via
+A screen with no reference image yet (fetch returns `404`) is skipped via
 `test.skip()`, never failed — the registry can list screens ahead of their
-export.
+export. Any other non-OK response (a transient GitHub/CDN failure, say)
+throws instead, failing the test rather than silently skipping it: only a
+confirmed "not exported yet" counts as a skip. Two registry entries sharing
+a `frameId` throw at module load, before any test runs, since they'd race
+writing the same snapshot file.
 
 ## Notes
 Approved under ticket SIE-100 ([6.1c] Visual regression). The reference
